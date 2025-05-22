@@ -16,7 +16,8 @@ int[][] tilemap = new int[32][32];
 PVector position = new PVector(0,0,0);
 PVector velocity = new PVector(0,0,0);
 
-
+boolean[] WASD = {false, false, false, false};
+boolean[] TURN = {false, false};
 void setup() {
   size(800, 450, P3D);
   position.x = tilemap.length * size / 2;
@@ -31,9 +32,9 @@ void setup() {
       if ((j == 0) || j == tilemap[i].length - 1) {
         tilemap[i][j] = 5;
       }
-      print(tilemap[i][j] + " ");
+      //(tilemap[i][j] + " ");
     }
-    println();
+    //println();
   }
   tilemap[9][14] = 5;
   tilemap[10][14] = 5;
@@ -45,20 +46,8 @@ void draw() {
   
   position.add(velocity);
   
-  if (velocity.x > maxspeed) {
-    velocity.x = maxspeed;
-  }
-  if (velocity.x < -1 * maxspeed) {
-    velocity.x = -1 * maxspeed;
-  }
-  if (velocity.z > maxspeed) {
-    velocity.z = maxspeed;
-  }
-  if (velocity.z < -1 * maxspeed) {
-    velocity.z = -1 * maxspeed;
-  }
-  
-  
+  velocity.x = constrain(velocity.x, -1 * maxspeed, maxspeed);
+  velocity.z = constrain(velocity.z, -1 * maxspeed, maxspeed);
   
   if (position.y >= 100) {
     position.y = 100;
@@ -127,34 +116,77 @@ PVector currentChunk() {
   for (int i = 0; i < position.z; i += size) {
     ycor += 1;
   }
-  println(xcor + " " + ycor);
+  //println(xcor + " " + ycor);
   return(new PVector(xcor, ycor));
 }
+void keyReleased(){
+  if (key == 'w'){
+    WASD[0] = false;
+  }
+  if (key == 'a'){
+    WASD[1] = false;
+  }
+  if (key == 's'){
+    WASD[2] = false;
+  }
+  if (key == 'd'){
+    WASD[3] = false;
+  }
+  if (keyCode == RIGHT) {
+      TURN[0] = false;
+    }
+  if (keyCode == LEFT) {
+      TURN[1] = false;
+  }
+}
 
+void keyPressed(){
+  if (key == 'w'){
+    WASD[0] = true;
+  }
+  if (key == 'a'){
+    WASD[1] = true;
+  }
+  if (key == 's'){
+    WASD[2] = true;
+  }
+  if (key == 'd'){
+    WASD[3] = true;
+  }
+  if (keyCode == RIGHT) {
+      TURN[0] = true;
+  }
+  if (keyCode == LEFT) {
+      TURN[1] = true;
+  }
+}
 void handleMovement() {
-  if (keyPressed) {
-    if (key == 'w') {
+    if (WASD[0]) {
       velocity.x += cos(radians(turn)) * 2;
       velocity.z += sin(radians(turn)) * 2;
     }
-    if (key == 's') {
+    if (WASD[2]) {
       velocity.x -= cos(radians(turn)) * 2;
       velocity.z -= sin(radians(turn)) * 2;
     }
-    if (key == 'a') {
+    if (WASD[1]) {
       velocity.x += sin(radians(turn)) * 2;
       velocity.z -= cos(radians(turn)) * 2;
     }
-    if (key == 'd') {
+    if (WASD[3]) {
       velocity.x -= sin(radians(turn)) * 2;
       velocity.z += cos(radians(turn)) * 2;
     }
-    if (keyCode == RIGHT) {
+    
+    if (TURN[0]) {
       turn += 2;
     }
-    if (keyCode == LEFT) {
+    if (TURN[1]) {
       turn -= 2;
     }
+    
+    
+  if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
     if (key == ' ' && position.y == 100) {
       velocity.y -= 1;
     }
