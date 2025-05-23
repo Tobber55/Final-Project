@@ -18,6 +18,9 @@ PVector velocity = new PVector(0,0,0);
 
 boolean[] WASD = {false, false, false, false};
 boolean[] TURN = {false, false};
+
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+
 void setup() {
   size(800, 450, P3D);
   position.x = tilemap.length * size / 2;
@@ -63,6 +66,12 @@ void draw() {
   handleMovement();
   
   //println(velocity.z);
+  
+  for (int i = 0; i < bullets.size(); i++) {
+    bullet
+  
+  }
+  
 }
 
 void drawScene() {
@@ -154,10 +163,15 @@ void keyPressed(){
     WASD[3] = true;
   }
   if (keyCode == RIGHT) {
-      TURN[0] = true;
+     TURN[0] = true;
   }
   if (keyCode == LEFT) {
-      TURN[1] = true;
+     TURN[1] = true;
+  }
+  if (keyCode == UP) {
+    PVector temp = new PVector(velocity.x, velocity.z);
+    Bullet shoot = new Bullet(position, temp.normalize());
+    bullets.add(shoot);
   }
 }
 void handleMovement() {
@@ -191,8 +205,8 @@ void handleMovement() {
       velocity.y -= 1;
     }
     
-    if (((currentChunk().x + 1 >= tilemap.length) && (velocity.x > 0)) || ((currentChunk().x - 1 <= 0) && (velocity.x < 0))) velocity.x = 0;
-    if (((currentChunk().y + 1 >= tilemap[0].length) && (velocity.z > 0)) || ((currentChunk().y - 1 <= 0) && (velocity.z < 0))) velocity.z = 0;
+    //if (((currentChunk().x + 1 >= tilemap.length) && (velocity.x > 0)) || ((currentChunk().x - 1 <= 0) && (velocity.x < 0))) velocity.x = 0;
+    //if (((currentChunk().y + 1 >= tilemap[0].length) && (velocity.z > 0)) || ((currentChunk().y - 1 <= 0) && (velocity.z < 0))) velocity.z = 0;
     
     //println(velocity.z);
     
