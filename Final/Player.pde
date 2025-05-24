@@ -1,14 +1,12 @@
 public class Player{
   float turn = 0;
   float gravity = 0.4;
-  float friction = 0.01;  
   float maxspeed = 1;
   PVector position = new PVector(0,0,0);
   PVector velocity = new PVector(0,0,0);
   boolean[] WASD = {false, false, false, false};
   boolean[] TURN = {false, false};
-  Tilemap tilemap = new Tilemap();
-  
+  int shootcool = 0;
   public Player(){
     position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
@@ -16,6 +14,10 @@ public class Player{
   }
   
   void movement(){
+    
+    if (shootcool > 0){
+      shootcool --;
+    }
     
     position.add(velocity);
 
@@ -75,8 +77,6 @@ public class Player{
       velocity.x = 0;
       velocity.z = 0;
     }
-    
-    
   }
   
   PVector currentChunk(float posx, float posz){
@@ -90,6 +90,11 @@ public class Player{
     }
     //println(xcor + " " + ycor);
     return(new PVector(xcor, ycor));
+  }
+  
+  void shoot(){
+    Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
+    bullets.add(bullet);
   }
   
   void release(){
@@ -133,8 +138,13 @@ public class Player{
         TURN[1] = true;
     }
     if (key == ' ' && position.y == 100) {
-      velocity.y = -20;
+      velocity.y = -10;
     }
+    
+    if (keyCode == UP && shootcool == 0){
+      shoot();
+    }
+    
   }
 }
   

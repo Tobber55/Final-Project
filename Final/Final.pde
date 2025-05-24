@@ -1,7 +1,8 @@
 
-
 int size = 64;
 int floor = 200;
+
+ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 Player player;
 Tilemap tilemap;
@@ -9,8 +10,8 @@ Tilemap tilemap;
 void setup() {
   size(800, 450, P3D);
   
-  player = new Player();
   tilemap = new Tilemap();
+  player = new Player();
   
 }
 
@@ -44,6 +45,17 @@ void drawScene() {
       }
     }
   }
+    for (int i = 0; i < bullets.size(); i ++){
+    Bullet bullet = bullets.get(i);
+    bullet.position.x += bullet.dir.x * bullet.speed;
+    bullet.position.z += bullet.dir.y * bullet.speed;
+    pushMatrix();
+    fill(0, 0, 0);
+    translate(bullet.position.x, 100, bullet.position.z);
+    sphere(size/8);
+    popMatrix();
+    if (bullet.collision()) bullets.remove(i);
+    }
   
 }
 
