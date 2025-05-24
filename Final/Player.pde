@@ -10,16 +10,18 @@ public class Player{
   Tilemap tilemap = new Tilemap();
   
   public Player(){
-    position.x = tilemap.length * size / 2;
+    position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
-    position.z = tilemap[0].length * size / 2; 
+    position.z = tilemap.tilemap()[0].length * size / 2; 
   }
   
   void movement(){
+    
     position.add(velocity);
-  
+
     velocity.x = constrain(velocity.x, -1 * maxspeed, maxspeed);
     velocity.z = constrain(velocity.z, -1 * maxspeed, maxspeed);
+    
     
     if (position.y >= 100) {
       position.y = 100;
@@ -54,39 +56,36 @@ public class Player{
     }
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
-      if (((currentChunk().x + 1 >= tilemap.length) && (velocity.x > 0)) || ((currentChunk().x - 1 <= 0) && (velocity.x < 0))) velocity.x = 0;
-      if (((currentChunk().y + 1 >= tilemap[0].length) && (velocity.z > 0)) || ((currentChunk().y - 1 <= 0) && (velocity.z < 0))) velocity.z = 0;
+      PVector coords = currentChunk(position.x, position.z);
+      int[][] temp = tilemap.tilemap();
       
-      //println(velocity.z);
-      
-      if ((((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 1] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y + 1] > 0)) && (velocity.x > 0))
-      || (((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 1] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y + 1] > 0)) && (velocity.x < 0))) velocity.x = 0;   //// DOESNT CLIP IN. DOESNT SLIDE
-      if ((((tilemap[(int)currentChunk().x][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 1][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 2] > 0)) && (velocity.z < 0))
-      || (((tilemap[(int)currentChunk().x][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x - 1][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y + 1] > 0)) && (velocity.z > 0))) velocity.z = 0;
-      
-      //if (((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y] > 0) && (velocity.x > 0)) || ((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 1] > 0) && (velocity.x > 0))
-      //|| ((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y] > 0) && (velocity.x < 0)) || ((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 1] > 0) && (velocity.x < 0))) velocity.x = 0;    ////////  DOESNT CLIP IN BUT CAN SOMETIMES. SLIDES
-      //if (((tilemap[(int)currentChunk().x][(int)currentChunk().y - 2] > 0) && (velocity.z < 0)) || ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y - 2] > 0) && (velocity.z < 0))
-      //|| ((tilemap[(int)currentChunk().x][(int)currentChunk().y + 1] > 0) && (velocity.z > 0)) || ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y + 1] > 0) && (velocity.z > 0))) velocity.z = 0;
-      
-      //if (((tilemap[(int)currentChunk().x][(int)currentChunk().y] > 0) && (velocity.x > 0)) || ((tilemap[(int)currentChunk().x][(int)currentChunk().y - 1] > 0) && (velocity.x > 0))
-      //|| ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y] > 0) && (velocity.x < 0)) || ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y - 1] > 0) && (velocity.x < 0))) velocity.x = 0;  /// CLIP IN COLLISIONS. DOESNT SLIDE
-      //if (((tilemap[(int)currentChunk().x][(int)currentChunk().y - 1] > 0) && (velocity.z < 0)) || ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y - 1] > 0) && (velocity.z < 0))
-      //|| ((tilemap[(int)currentChunk().x][(int)currentChunk().y] > 0) && (velocity.z > 0)) || ((tilemap[(int)currentChunk().x - 1][(int)currentChunk().y] > 0) && (velocity.z > 0))) velocity.z = 0;
+      //println(temp[(int)coords.x][(int)coords.z]);
+      for (int i = -2; i < 2; i ++){
+        if ((temp[(int)coords.x + 1][(int)coords.y + i] > 0 && velocity.x > 0) || (temp[(int)coords.x - 2][(int)coords.y + i] > 0) && velocity.x < 0){
+          velocity.x = 0;
+        }
+      }
+      for (int i = -2; i < 2; i ++){
+        if ((temp[(int)coords.x + i][(int)coords.y - 2] > 0 && velocity.z < 0) || (temp[(int)coords.x + i][(int)coords.y + 1] > 0) && velocity.z > 0){
+          velocity.z = 0;
+        }
+      }
     }
     else {
       velocity.x = 0;
       velocity.z = 0;
     }
+    
+    
   }
   
-  PVector currentChunk() {
+  PVector currentChunk(float posx, float posz){
     int xcor = 0;
     int ycor = 0;
-    for (int i = 0; i < position.x; i += size) {
+    for (int i = 0; i < posx; i += size) {
       xcor += 1;
     }
-    for (int i = 0; i < position.z; i += size) {
+    for (int i = 0; i < posz; i += size) {
       ycor += 1;
     }
     //println(xcor + " " + ycor);
@@ -137,6 +136,7 @@ public class Player{
       velocity.y = -20;
     }
   }
+}
   
   
   

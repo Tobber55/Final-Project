@@ -10,13 +10,15 @@ public class Tilemap{
         if ((j == 0) || j == map[i].length - 1) {
           map[i][j] = 5;
         }
-        //(tilemap[i][j] + " ");
+        //print(map[i][j] + " ");
       }
       //println();
     }
     map[9][14] = 5;
     map[10][14] = 5;
     map[12][10] = 5;
+    
+    
   }
   
   public int[][] tilemap(){

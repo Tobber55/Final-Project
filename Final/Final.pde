@@ -1,7 +1,6 @@
 
 
 int size = 64;
-
 int floor = 200;
 
 Player player;
@@ -17,8 +16,9 @@ void setup() {
 
 void draw() {
   background(120, 160, 200);
-  
-  camera(position.x, position.y, position.z, position.x + cos(radians(turn)), position.y, position.z + sin(radians(turn)), 0, 1, 0);
+  PVector playerpos = player.position;
+  float turn = player.turn;
+  camera(playerpos.x, playerpos.y, playerpos.z, playerpos.x + cos(radians(turn)), playerpos.y, playerpos.z + sin(radians(turn)), 0, 1, 0);
 
   drawScene();
   player.movement();
