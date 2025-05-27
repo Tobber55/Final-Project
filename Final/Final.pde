@@ -19,9 +19,7 @@ PVector velocity = new PVector(0,0,0);
 boolean[] WASD = {false, false, false, false};
 boolean[] TURN = {false, false};
 
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
-
-int bulletcooldown = 100;
+UI ui;
 
 void setup() {
   size(800, 450, P3D);
@@ -44,9 +42,20 @@ void setup() {
   tilemap[9][14] = 5;
   tilemap[10][14] = 5;
   tilemap[12][10] = 5;
+  
+  ui = new UI();
 }
 
 void draw() {
+  
+  if (turn > 360) {
+    turn = 0;
+  }
+  if (turn < -360) {
+    turn = 0;
+  }
+  
+  
   background(120, 160, 200);
   
   position.add(velocity);
@@ -67,14 +76,11 @@ void draw() {
   drawScene();
   handleMovement();
   
-  
-  bulletcooldown -= 1;
-  
-  for (int i = 0; i < bullets.size(); i++) {
-    bullets.get(i).update();
-  }
+  ui.update(position, turn, TURN);
   
 }
+
+
 
 void drawScene() {
   
@@ -170,12 +176,6 @@ void keyPressed(){
   }
   if (keyCode == LEFT) {
      TURN[1] = true;
-  }
-  if ((keyCode == UP) && (bulletcooldown <= 0)) {
-    PVector temp = new PVector(velocity.x, velocity.z);
-    Bullet shoot = new Bullet(position, temp.normalize());
-    bullets.add(shoot);
-    bulletcooldown = 100;
   }
 }
 void handleMovement() {
