@@ -11,7 +11,14 @@ public class Bullet{
   }
   
   boolean collision(){
-    return tilemap.tilemap()[round(position.x)/size][round(position.z)/size] > 0;
+    for (int x = -8; x < 9; x ++){
+      for (int y = -8; y < 9; y ++){
+        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
   

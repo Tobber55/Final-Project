@@ -15,8 +15,8 @@ public class Tilemap{
       //println();
     }
     map[9][14] = 5;
-    map[10][14] = 5;
-    map[12][10] = 5;
+    //map[10][14] = 5;
+    //map[12][10] = 5;
     
     
   }
