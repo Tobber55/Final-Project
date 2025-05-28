@@ -19,11 +19,11 @@ public class UI {
     
     if ((TURN[0] == true) && (TURN[1] == false)) {
       rotateY(PI/90);
-      turnOffset.x = 2.60;
+      turnOffset.x = 2.76;
     }
     else if ((TURN[0] == false) && (TURN[1] == true)) {
       rotateY(-PI/90);
-      turnOffset.x = -2.60;
+      turnOffset.x = -2.76;
     }
     else {
       turnOffset.x = 0; 
