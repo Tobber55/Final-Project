@@ -6,16 +6,26 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 Player player;
 Tilemap tilemap;
+UI ui;
 
 void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
   player = new Player();
-  
+  ui = new UI();
 }
 
 void draw() {
+  
+  if (turn > 360) {
+    turn = 0;
+  }
+  if (turn < -360) {
+    turn = 0;
+  }
+  
+  
   background(120, 160, 200);
   PVector playerpos = player.position;
   float turn = player.turn;
@@ -23,7 +33,11 @@ void draw() {
 
   drawScene();
   player.movement();
+  ui.update(position, turn, TURN);
+  
 }
+
+
 
 void drawScene() {
   int[][] temp = tilemap.tilemap();
