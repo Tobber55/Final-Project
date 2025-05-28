@@ -19,7 +19,7 @@ PVector velocity = new PVector(0,0,0);
 boolean[] WASD = {false, false, false, false};
 boolean[] TURN = {false, false};
 
-ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+UI ui;
 
 void setup() {
   size(800, 450, P3D);
@@ -42,9 +42,20 @@ void setup() {
   tilemap[9][14] = 5;
   tilemap[10][14] = 5;
   tilemap[12][10] = 5;
+  
+  ui = new UI();
 }
 
 void draw() {
+  
+  if (turn > 360) {
+    turn = 0;
+  }
+  if (turn < -360) {
+    turn = 0;
+  }
+  
+  
   background(120, 160, 200);
   
   position.add(velocity);
@@ -65,14 +76,11 @@ void draw() {
   drawScene();
   handleMovement();
   
-  //println(velocity.z);
-  
-  for (int i = 0; i < bullets.size(); i++) {
-    bullet
-  
-  }
+  ui.update(position, turn, TURN);
   
 }
+
+
 
 void drawScene() {
   
@@ -128,6 +136,7 @@ PVector currentChunk() {
   //println(xcor + " " + ycor);
   return(new PVector(xcor, ycor));
 }
+
 void keyReleased(){
   if (key == 'w'){
     WASD[0] = false;
@@ -168,11 +177,6 @@ void keyPressed(){
   if (keyCode == LEFT) {
      TURN[1] = true;
   }
-  if (keyCode == UP) {
-    PVector temp = new PVector(velocity.x, velocity.z);
-    Bullet shoot = new Bullet(position, temp.normalize());
-    bullets.add(shoot);
-  }
 }
 void handleMovement() {
     if (WASD[0]) {
@@ -210,10 +214,13 @@ void handleMovement() {
     
     //println(velocity.z);
     
-    if ((((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 1] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y + 1] > 0)) && (velocity.x > 0))
-    || (((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 1] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y + 1] > 0)) && (velocity.x < 0))) velocity.x = 0;   //// DOESNT CLIP IN. DOESNT SLIDE
-    if ((((tilemap[(int)currentChunk().x][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 1][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 2] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 2] > 0)) && (velocity.z < 0))
-    || (((tilemap[(int)currentChunk().x][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x - 1][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x - 2][(int)currentChunk().y + 1] > 0) || (tilemap[(int)currentChunk().x + 1][(int)currentChunk().y + 1] > 0)) && (velocity.z > 0))) velocity.z = 0;
+    float currentChunkx = currentChunk().x;
+    float currentChunky = currentChunk().y;
+    
+    if ((((tilemap[(int)currentChunkx + 1][(int)currentChunky] > 0) || (tilemap[(int)currentChunkx + 1][(int)currentChunky - 1] > 0) || (tilemap[(int)currentChunkx + 1][(int)currentChunky - 2] > 0) || (tilemap[(int)currentChunkx + 1][(int)currentChunky + 1] > 0)) && (velocity.x > 0))
+    || (((tilemap[(int)currentChunkx - 2][(int)currentChunky] > 0) || (tilemap[(int)currentChunkx - 2][(int)currentChunky - 1] > 0) || (tilemap[(int)currentChunkx - 2][(int)currentChunky - 2] > 0) || (tilemap[(int)currentChunkx - 2][(int)currentChunky + 1] > 0)) && (velocity.x < 0))) velocity.x = 0;   //// DOESNT CLIP IN. DOESNT SLIDE
+    if ((((tilemap[(int)currentChunkx][(int)currentChunky - 2] > 0) || (tilemap[(int)currentChunkx - 1][(int)currentChunky - 2] > 0) || (tilemap[(int)currentChunkx - 2][(int)currentChunky - 2] > 0) || (tilemap[(int)currentChunkx + 1][(int)currentChunky - 2] > 0)) && (velocity.z < 0))
+    || (((tilemap[(int)currentChunkx][(int)currentChunky + 1] > 0) || (tilemap[(int)currentChunkx - 1][(int)currentChunky + 1] > 0) || (tilemap[(int)currentChunkx - 2][(int)currentChunky + 1] > 0) || (tilemap[(int)currentChunkx + 1][(int)currentChunky + 1] > 0)) && (velocity.z > 0))) velocity.z = 0;
     
     //if (((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y] > 0) && (velocity.x > 0)) || ((tilemap[(int)currentChunk().x + 1][(int)currentChunk().y - 1] > 0) && (velocity.x > 0))
     //|| ((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y] > 0) && (velocity.x < 0)) || ((tilemap[(int)currentChunk().x - 2][(int)currentChunk().y - 1] > 0) && (velocity.x < 0))) velocity.x = 0;    ////////  DOESNT CLIP IN BUT CAN SOMETIMES. SLIDES
