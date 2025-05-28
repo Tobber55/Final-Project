@@ -18,11 +18,11 @@ void setup() {
 
 void draw() {
   
-  if (turn > 360) {
-    turn = 0;
+  if (player.turn > 360) {
+    player.turn = 0;
   }
-  if (turn < -360) {
-    turn = 0;
+  if (player.turn < -360) {
+    player.turn = 0;
   }
   
   
@@ -33,7 +33,7 @@ void draw() {
 
   drawScene();
   player.movement();
-  ui.update(position, turn, TURN);
+  ui.update(player.position, player.turn, player.TURN, player.WASD);
   
 }
 
