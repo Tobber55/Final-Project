@@ -1,30 +1,24 @@
-public class Bullet {
-  PVector velocity = new PVector(0, 0);
-  int speed = 10;
-  PVector position = new PVector(0, 0, 0);
-  int size = 112;
+public class Bullet{
+  PVector dir;
+  int speed = 15;
+  PVector position;
+  boolean players;
   
-  public Bullet(PVector pos, PVector vel) {
+  public Bullet(PVector pos, PVector velocity, boolean p){
     position = pos;
-    velocity = vel;
-    
-    //noStroke();
-    lights();
-    translate(position.x, position.y, position.z);
-    sphere(size);
-    
+    dir = velocity.normalize();
+    players = p;
   }
   
-  //void draw() {
-    
-  //  noStroke();
-  //  lights();
-  //  translate(position.x, position.y, position.z);
-  //  sphere(size);
-    
-    
-  //}
-  
-  
-  
+  boolean collision(){
+    for (int x = -8; x < 9; x ++){
+      for (int y = -8; y < 9; y ++){
+        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 }
+  
