@@ -1,8 +1,8 @@
 public class UI {
-  PVector position = new PVector(0, 0, 0);
-  int forward = 100;
   
-  PVector turnOffset = new PVector(0, 0);
+  int forward = 50;
+  
+  float turnOffset = 0;
   PVector wasdOffset = new PVector(0, 0);
   
   public UI() {
@@ -11,7 +11,12 @@ public class UI {
   
   public void update(PVector position, float turn, boolean[] TURN, boolean[] WASD) {
     pushMatrix();
-    translate(position.x + (cos(turn / (180 / PI)) * 80), position.y, position.z + (sin(turn / (180 / PI)) * 80));
+    if (WASD[0] == true) {
+      translate(position.x + (cos(turn / (180 / PI)) * forward) - forward / (90/PI), position.y, position.z + (sin(turn / (180 / PI)) * forward));
+    }
+    else {
+      translate(position.x + (cos(turn / (180 / PI)) * forward), position.y, position.z + (sin(turn / (180 / PI)) * forward));
+    }
     fill(100, 180, 100);
     rotateY(-1 * turn / (180/PI));
     rotateY(PI/2);
@@ -19,24 +24,28 @@ public class UI {
     
     if ((TURN[0] == true) && (TURN[1] == false)) {
       rotateY(PI/90);
-      turnOffset.x = 2.76;
+      turnOffset = forward / (90/PI);
     }
     else if ((TURN[0] == false) && (TURN[1] == true)) {
       rotateY(-PI/90);
-      turnOffset.x = -2.76;
+      turnOffset = -forward / (90/PI);
     }
     else {
-      turnOffset.x = 0; 
+      turnOffset = 0; 
     }
     
     if (WASD[1] == true) {
-      wasdOffset.x = 100;
-      println(WASD[1]);
+      wasdOffset.x = -forward / (90/PI);
+    }
+    else {
+      wasdOffset.x = 0;
     }
     
+    println(position.x + (cos(turn / (180 / PI)) * forward));
+    
     // UI
-    rect(turnOffset.x, turnOffset.y, 100, 20);
-    circle(turnOffset.x, turnOffset.y, 50);  
+    rect(turnOffset, 0, 20, 4);
+    circle(turnOffset, 0, 10);  
     
     popMatrix();
   }
