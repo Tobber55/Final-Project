@@ -5,58 +5,51 @@ public class UI {
   float turnOffset = 0;
   PVector wasdOffset = new PVector(0, 0);
   
+  PImage img = loadImage("Sze.png");
+  
   public UI() {
     
   }
   
-  public void update(PVector position, float turn, boolean[] TURN, boolean[] WASD) {
+  public void update(Player player) {
     camera();
-    rect(0, 25, 125, 18);
-    pushMatrix();
+    translate(width / 2, height / 2, 325);
     
-    translate(position.x + (cos(turn / (180 / PI)) * forward), position.y, position.z + (sin(turn / (180 / PI)) * forward));
+    fill(120,120,120);
+    rect(0, 30, 155, 18);
     
-    rotateY(-1 * turn / (180/PI));
-    rotateY(PI/2);
-    rectMode(CENTER);
+    fill(129, 133, 137);
+    rect(turnOffset + 42, 30, 1, 18);
+    rect(turnOffset + 10, 30, 1, 18);
+    rect(turnOffset - 10, 30, 1, 18);
+    rect(turnOffset - 42, 30, 1, 18);
     
-    if ((TURN[0] == true) && (TURN[1] == false)) {
-      rotateY(PI/90);
-      turnOffset = forward / (90/PI);
-    }
-    else if ((TURN[0] == false) && (TURN[1] == true)) {
-      rotateY(-PI/90);
-      turnOffset = -forward / (90/PI);
-    }
-    else {
-      turnOffset = 0; 
-    }
+    fill(0, 0, 0);
+    rect(turnOffset, 30, 19, 18);
     
-    println(position.x + (cos(turn / (180 / PI)) * forward));
+    fill(178, 190, 181);
+    textSize(128);
+    textMode(MODEL);
+    scale(0.042, 0.032);
+    text("AMMO", -1480, 1125); 
+    text("HEALTH", -850, 1125); 
+    text("ARMOR", 420, 1125); 
+    text("ARMS", 1150, 1125); 
     
-    // UI
+    fill(175, 0, 0);
+    scale(1/0.042, 1/0.032);
+    scale(0.095, 0.07);
     
-    //fill(169, 169, 169);
-    //rect(turnOffset, 25, 125, 18);
+    text(player.ammo, -610, 440); 
+    if (player.health >= 100) text(player.health + "%", -420, 440); //// CENTER
+    else if ((player.health < 100) && (player.health > 9)) text(player.health + "%", -390, 440);
+    else text(player.health + "%", -360, 440);
+    text(player.armor + "%", 125, 440); 
+    scale(1/0.095, 1/0.07);
     
-    //fill(129, 133, 137);
-    //rect(turnOffset + 32, 25, 1, 18);
-    //rect(turnOffset + 8, 25, 1, 18);
-    //rect(turnOffset - 8, 25, 1, 18);
-    //rect(turnOffset - 32, 25, 1, 18);
-    
-    //fill(0, 0, 0);
-    //rect(turnOffset, 25, 15, 18);
-    
-    //fill(178, 190, 181, -30);
-    //textSize(12);
-    //text("word", 0, 0); 
-    
-    //circle(turnOffset, 0, 10);  
-    
-    popMatrix();
-    
-    
+    scale(0.0081, 0.007);
+    image(img, -1200, 3100);
+    scale(1/0.007, 1/0.007);
   }
   
 }

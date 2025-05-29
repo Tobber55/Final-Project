@@ -33,7 +33,7 @@ void draw() {
 
   drawScene();
   player.movement();
-  ui.update(player.position, player.turn, player.TURN, player.WASD);
+  ui.update(player);
   
 }
 
