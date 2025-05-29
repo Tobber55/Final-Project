@@ -7,6 +7,12 @@ public class Player{
   boolean[] WASD = {false, false, false, false};
   boolean[] TURN = {false, false};
   int shootcool = 0;
+  
+  int ammo = 6;
+  int health = 100;
+  int armor = 100;
+  
+  
   public Player(){
     position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
@@ -137,9 +143,9 @@ public class Player{
     if (keyCode == LEFT) {
         TURN[1] = true;
     }
-    if (key == ' ' && position.y == 100) {
-      velocity.y = -10;
-    }
+    //if (key == ' ' && position.y == 100) {
+    //  velocity.y = -10;
+    //}
     
     if (keyCode == UP && shootcool == 0){
       shoot();

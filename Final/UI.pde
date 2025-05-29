@@ -10,14 +10,12 @@ public class UI {
   }
   
   public void update(PVector position, float turn, boolean[] TURN, boolean[] WASD) {
+    camera();
+    rect(0, 25, 125, 18);
     pushMatrix();
-    if (WASD[0] == true) {
-      translate(position.x + (cos(turn / (180 / PI)) * forward) - forward / (90/PI), position.y, position.z + (sin(turn / (180 / PI)) * forward));
-    }
-    else {
-      translate(position.x + (cos(turn / (180 / PI)) * forward), position.y, position.z + (sin(turn / (180 / PI)) * forward));
-    }
-    fill(100, 180, 100);
+    
+    translate(position.x + (cos(turn / (180 / PI)) * forward), position.y, position.z + (sin(turn / (180 / PI)) * forward));
+    
     rotateY(-1 * turn / (180/PI));
     rotateY(PI/2);
     rectMode(CENTER);
@@ -34,20 +32,31 @@ public class UI {
       turnOffset = 0; 
     }
     
-    if (WASD[1] == true) {
-      wasdOffset.x = -forward / (90/PI);
-    }
-    else {
-      wasdOffset.x = 0;
-    }
-    
     println(position.x + (cos(turn / (180 / PI)) * forward));
     
     // UI
-    rect(turnOffset, 0, 20, 4);
-    circle(turnOffset, 0, 10);  
+    
+    //fill(169, 169, 169);
+    //rect(turnOffset, 25, 125, 18);
+    
+    //fill(129, 133, 137);
+    //rect(turnOffset + 32, 25, 1, 18);
+    //rect(turnOffset + 8, 25, 1, 18);
+    //rect(turnOffset - 8, 25, 1, 18);
+    //rect(turnOffset - 32, 25, 1, 18);
+    
+    //fill(0, 0, 0);
+    //rect(turnOffset, 25, 15, 18);
+    
+    //fill(178, 190, 181, -30);
+    //textSize(12);
+    //text("word", 0, 0); 
+    
+    //circle(turnOffset, 0, 10);  
     
     popMatrix();
+    
+    
   }
   
 }
