@@ -4,6 +4,9 @@ int floor = 200;
 
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
+String[] players = {"Alvin", "Alex", "Thamidur"};
+
+
 Player player;
 Tilemap tilemap;
 UI ui;
@@ -12,7 +15,7 @@ void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
-  player = new Player();
+  player = new Player(players[0]);
   ui = new UI();
 }
 

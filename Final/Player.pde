@@ -7,22 +7,29 @@ public class Player{
   boolean[] WASD = {false, false, false, false};
   boolean[] TURN = {false, false};
   int shootcool = 0;
+  int powercool = 0;
   
   int ammo = 6;
   int health = 100;
   int armor = 100;
   
+  String player = "";
   
-  public Player(){
+  public Player(String player){
     position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
     position.z = tilemap.tilemap()[0].length * size / 2; 
+    this.player = player;
   }
   
   void movement(){
     
     if (shootcool > 0){
       shootcool --;
+    }
+    
+    if (powercool > 0){
+      powercool --;
     }
     
     position.add(velocity);
@@ -83,6 +90,8 @@ public class Player{
       velocity.x = 0;
       velocity.z = 0;
     }
+    
+    
   }
   
   PVector currentChunk(float posx, float posz){
@@ -121,10 +130,10 @@ public class Player{
       WASD[3] = false;
     }
     if (keyCode == RIGHT) {
-        TURN[0] = false;
-      }
+      TURN[0] = false;
+    }
     if (keyCode == LEFT) {
-        TURN[1] = false;
+      TURN[1] = false;
     }
   }
   
@@ -142,17 +151,33 @@ public class Player{
       WASD[3] = true;
     }
     if (keyCode == RIGHT) {
-        TURN[0] = true;
+      TURN[0] = true;
     }
     if (keyCode == LEFT) {
-        TURN[1] = true;
+      TURN[1] = true;
     }
-    //if (key == ' ' && position.y == 100) {
-    //  velocity.y = -10;
-    //}
+    if (key == ' ' && position.y == 100) {
+      velocity.y = -10;
+    }
     
-    if (keyCode == UP && shootcool == 0){
+    if (keyCode == UP && shootcool <= 0){
       shoot();
+    }
+    
+    if (key == 'f' && powercool <= 0) {
+      if (player == "Alvin") { ///////////////// MOGGING
+        
+        
+      }
+      else if (player == "Alex") { ///////////////// TIME STOP
+        
+        
+      }
+      else if (player == "Thamidur") { ///////////////// 
+        
+        
+      }
+      powercool = 150;
     }
     
   }
