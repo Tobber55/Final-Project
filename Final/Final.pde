@@ -3,9 +3,11 @@ int size = 64;
 int floor = 200;
 
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+ArrayList<Bullet> enemybullets = new ArrayList<Bullet>();
 
-String[] players = {"Alvin", "Alex", "Thamidur"};
+ArrayList<Ammo> ammos = new ArrayList<Ammo>();
 
+String[] characters = {"Alvin", "Alex", "Thamidur"};
 
 Player player;
 Tilemap tilemap;
@@ -15,8 +17,18 @@ void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
-  player = new Player(players[0]);
+  player = new Player(characters[0]);
   ui = new UI();
+  
+  int[][] map = tilemap.tilemap();
+  for (int x = 0; x < map.length; x ++){
+    for (int y = 0; y < map[0].length; y ++){
+      if (map[x][y] == -1){
+        PVector temp = new PVector(x, y);
+        ammos.add(new Ammo(temp));
+      }
+    }
+  }
 }
 
 void draw() {
@@ -63,15 +75,26 @@ void drawScene() {
     }
   }
     for (int i = 0; i < bullets.size(); i ++){
-    Bullet bullet = bullets.get(i);
-    bullet.position.x += bullet.dir.x * bullet.speed;
-    bullet.position.z += bullet.dir.y * bullet.speed;
-    pushMatrix();
-    fill(0, 0, 0);
-    translate(bullet.position.x, 100, bullet.position.z);
-    sphere(size/8);
-    popMatrix();
-    if (bullet.collision()) bullets.remove(i);
+      Bullet bullet = bullets.get(i);
+      bullet.position.x += bullet.dir.x * bullet.speed;
+      bullet.position.z += bullet.dir.y * bullet.speed;
+      pushMatrix();
+      fill(0, 0, 0);
+      translate(bullet.position.x, 100, bullet.position.z);
+      sphere(size/8);
+      popMatrix();
+      if (bullet.collision()) bullets.remove(i);
+    }
+    
+    for (int i = 0; i < ammos.size(); i ++){
+      pushMatrix();
+      //println(ammos.get(i).currentChunk.x + " " + ammos.get(i).currentChunk.y);
+      translate(size * ammos.get(i).currentChunk.x, 100, size * ammos.get(i).currentChunk.y);
+      rotateY(frameCount * 0.05);
+      translate(-32, 0, 0);
+      image(ammos.get(i).img, 0, 0);
+      ammos.get(i).img.resize(64, 64);
+      popMatrix();
     }
   
 }

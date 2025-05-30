@@ -72,9 +72,9 @@ public class Player{
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
       PVector coords = currentChunk(position.x, position.z);
+      //println(coords.x + " " + coords.y);
       int[][] temp = tilemap.tilemap();
       
-      //println(temp[(int)coords.x][(int)coords.z]);
       for (int i = -2; i < 2; i ++){
         if ((temp[(int)coords.x + 1][(int)coords.y + i] > 0 && velocity.x > 0) || (temp[(int)coords.x - 2][(int)coords.y + i] > 0) && velocity.x < 0){
           velocity.x = 0;
