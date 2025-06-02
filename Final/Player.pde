@@ -109,7 +109,7 @@ public class Player{
   
   void shoot(){
     if ((shootcool <= 0) && (ammo > 0)) {
-      Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
+      Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 20, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
       bullets.add(bullet);
       ammo -= 1;
       shootcool = 60;

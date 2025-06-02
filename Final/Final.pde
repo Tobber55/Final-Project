@@ -80,7 +80,7 @@ void drawScene() {
       bullet.position.z += bullet.dir.y * bullet.speed;
       pushMatrix();
       fill(0, 0, 0);
-      translate(bullet.position.x, 100, bullet.position.z);
+      translate(bullet.position.x, bullet.position.y, bullet.position.z);
       sphere(size/8);
       popMatrix();
       if (bullet.collision()) bullets.remove(i);
@@ -95,6 +95,12 @@ void drawScene() {
       image(ammos.get(i).img, 0, 0);
       ammos.get(i).img.resize(64, 64);
       popMatrix();
+      //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.position.x, player.position.z));
+      if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
+      abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1 && player.ammo < 6){
+        ammos.remove(i);
+        player.ammo = 6;
+      }
     }
   
 }
