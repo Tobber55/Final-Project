@@ -1,44 +1,93 @@
 public class UI {
-  PVector position = new PVector(0, 0, 0);
-  int forward = 100;
+  
+  int forward = 50;
+  
+  float turnOffset = 0;
+  PVector wasdOffset = new PVector(0, 0);
+  
+  PImage img = loadImage("Sze.png");
+  
+  boolean startscreen = true;
   
   public UI() {
     
   }
   
-  public void update(PVector position, float turn, boolean[] TURN) {
-    pushMatrix();
-    translate(position.x + (cos(turn / (180 / PI)) * 100), position.y, position.z + (sin(turn / (180 / PI)) * 100));
-    fill(100, 180, 100);
-    rotateY(-1 * turn / (180/PI));
-    rotateY(PI/2);
-    rectMode(CENTER);
-    if ((TURN[0] == true) && (TURN[1] == false)) {
-      rotateY(PI/90);
+  public void update(Player player) {
+    camera();
+    translate(width / 2, height / 2, 325);
+    
+    fill(120,120,120);
+    rect(0, 30, 155, 18);
+    
+    fill(129, 133, 137);
+    rect(turnOffset + 42, 30, 1, 18);
+    rect(turnOffset + 10, 30, 1, 18);
+    rect(turnOffset - 10, 30, 1, 18);
+    rect(turnOffset - 42, 30, 1, 18);
+    
+    fill(0, 0, 0);
+    rect(turnOffset, 30, 19, 18);
+    
+    fill(178, 190, 181);
+    textSize(128);
+    textMode(MODEL);
+    scale(0.042, 0.032);
+    text("AMMO", -1480, 1125); 
+    text("HEALTH", -850, 1125); 
+    text("ARMOR", 420, 1125); 
+    text("ARMS", 1150, 1125); 
+    
+    fill(175, 0, 0);
+    scale(1/0.042, 1/0.032);
+    scale(0.095, 0.07);
+    
+    text(player.ammo, -610, 440); 
+    if (player.health >= 100) text(player.health + "%", -420, 440); //// CENTER
+    else if ((player.health < 100) && (player.health > 9)) text(player.health + "%", -390, 440);
+    else text(player.health + "%", -360, 440);
+    text(player.armor + "%", 125, 440); 
+    scale(1/0.095, 1/0.07);
+    
+    scale(0.0081, 0.007);
+    image(img, -1200, 3100);
+    scale(1/0.007, 1/0.007);
+  }
+  
+  public void uiStart() {
+    camera();
+    background(0);
+    
+    // Start Button
+    
+    if ((mouseX > 275) && (mouseX < 525) && (mouseY > 250) && (mouseY < 325)) {
+      fill(218, 165, 32);
+      stroke(255, 215, 0);
+      rect(275, 250, 250, 75);
+      textSize(40);
       
-      // UI
-      rect(3.45, 0, 100, 20);
-      circle(3.45, 0, 50);
-      
-      println(1222);
-    }
-    else if ((TURN[0] == false) && (TURN[1] == true)) {
-      rotateY(-PI/90);
-      
-      // UI
-      rect(-3.45, 0, 100, 20); 
-      circle(-3.45, 0, 50);
-      
+      fill(255);
+      strokeWeight(5);
+      text("Start", 350, 300);
     }
     else {
+      fill(120,120,120);
+      stroke(255, 215, 0);
+      rect(275, 250, 250, 75);
+      textSize(40);
       
-      // UI
-      rect(0, 0, 100, 20);
-      circle(0, 0, 50);
-      
-      
+      fill(255);
+      strokeWeight(5);
+      text("Start", 350, 300); 
     }
-    popMatrix();
+    
+    
+    
+    
+  }
+  
+  void mousePressed() {
+    
   }
   
 }
