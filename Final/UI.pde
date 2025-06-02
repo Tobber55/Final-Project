@@ -7,6 +7,8 @@ public class UI {
   
   PImage img = loadImage("Sze.png");
   
+  boolean startscreen = true;
+  
   public UI() {
     
   }
@@ -50,6 +52,42 @@ public class UI {
     scale(0.0081, 0.007);
     image(img, -1200, 3100);
     scale(1/0.007, 1/0.007);
+  }
+  
+  public void uiStart() {
+    camera();
+    background(0);
+    
+    // Start Button
+    
+    if ((mouseX > 275) && (mouseX < 525) && (mouseY > 250) && (mouseY < 325)) {
+      fill(218, 165, 32);
+      stroke(255, 215, 0);
+      rect(275, 250, 250, 75);
+      textSize(40);
+      
+      fill(255);
+      strokeWeight(5);
+      text("Start", 350, 300);
+    }
+    else {
+      fill(120,120,120);
+      stroke(255, 215, 0);
+      rect(275, 250, 250, 75);
+      textSize(40);
+      
+      fill(255);
+      strokeWeight(5);
+      text("Start", 350, 300); 
+    }
+    
+    
+    
+    
+  }
+  
+  void mousePressed() {
+    
   }
   
 }

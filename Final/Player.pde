@@ -64,10 +64,10 @@ public class Player{
     }
     
     if (TURN[0]) {
-      turn += 2;
+      turn += 1.5;
     }
     if (TURN[1]) {
-      turn -= 2;
+      turn -= 1.5;
     }
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){

@@ -9,6 +9,8 @@ ArrayList<Ammo> ammos = new ArrayList<Ammo>();
 
 String[] characters = {"Alvin", "Alex", "Thamidur"};
 
+boolean startscreen = true;
+
 Player player;
 Tilemap tilemap;
 UI ui;
@@ -40,16 +42,20 @@ void draw() {
     player.turn = 0;
   }
   
-  
-  background(120, 160, 200);
   PVector playerpos = player.position;
   float turn = player.turn;
   camera(playerpos.x, playerpos.y, playerpos.z, playerpos.x + cos(radians(turn)), playerpos.y, playerpos.z + sin(radians(turn)), 0, 1, 0);
-
-  drawScene();
-  player.movement();
-  ui.update(player);
   
+  
+  if (startscreen == false) {
+    background(120, 160, 200);
+    drawScene();
+    player.movement();
+    ui.update(player);
+  }
+  else {
+    ui.uiStart();
+  }
 }
 
 
@@ -104,5 +110,6 @@ void keyReleased(){
 }
 
 void keyPressed(){
+  startscreen = false;
   player.press();
 }
