@@ -7,8 +7,6 @@ ArrayList<Bullet> enemybullets = new ArrayList<Bullet>();
 
 ArrayList<Ammo> ammos = new ArrayList<Ammo>();
 
-String[] characters = {"Alvin", "Alex", "Thamidur"};
-
 boolean startscreen = true;
 
 Player player;
@@ -19,7 +17,7 @@ void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
-  player = new Player(characters[0]);
+  player = new Player();
   ui = new UI();
   
   int[][] map = tilemap.tilemap();
@@ -112,4 +110,8 @@ void keyReleased(){
 void keyPressed(){
   startscreen = false;
   player.press();
+}
+
+void mousePressed() {
+  if (startscreen == true) startscreen = ui.readInput(new PVector(mouseX, mouseY), player);
 }
