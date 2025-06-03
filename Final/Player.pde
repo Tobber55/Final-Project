@@ -9,6 +9,8 @@ public class Player{
   boolean shoot = false;
   
   int shootcool = 0;
+  int shootmaxcool = 0;
+  
   int powercool = 0;
   
   int ammo = 6;
@@ -120,8 +122,7 @@ public class Player{
       Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
       bullets.add(bullet);
       ammo -= 1;
-      if (player == "Tobber") shootcool = 10;
-      if (player == "Shadow") shootcool = 60;
+      shootcool = shootmaxcool;
     }
   }
   

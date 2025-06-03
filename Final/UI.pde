@@ -212,6 +212,7 @@ public class UI {
         player.player = "Tobber";
         player.maxammo = 30;
         player.ammo = player.maxammo;
+        player.shootmaxcool = 10;
         stage = 3;
         return(false);
       }
@@ -221,6 +222,7 @@ public class UI {
         player.player = "Shadow";
         player.maxammo = 6;
         player.ammo = player.maxammo;
+        player.shootmaxcool = 60;
         stage = 3;
         return(false);
       }
@@ -230,6 +232,7 @@ public class UI {
         player.player = "Aria";
         player.maxammo = 0;
         player.ammo = player.maxammo;
+        player.shootmaxcool = 10;
         stage = 3;
         return(false);
       }
