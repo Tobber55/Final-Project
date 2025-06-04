@@ -6,20 +6,28 @@ public class Player{
   PVector velocity = new PVector(0,0,0);
   boolean[] WASD = {false, false, false, false};
   boolean[] TURN = {false, false};
+
+  boolean shoot = false;
+  
   int shootcool = 0;
+  int shootmaxcool = 0;
+  
   int powercool = 0;
+  boolean ability = false;
   
   int ammo = 6;
+  int maxammo = 6;
+  
+
   int health = 100;
   int armor = 100;
   
   String player = "";
   
-  public Player(String player){
+  public Player(){
     position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
     position.z = tilemap.tilemap()[0].length * size / 2; 
-    this.player = player;
   }
   
   void movement(){
@@ -64,10 +72,12 @@ public class Player{
     }
     
     if (TURN[0]) {
-      turn += 2;
+
+      turn += 1.5;
     }
     if (TURN[1]) {
-      turn -= 2;
+      turn -= 1.5;
+
     }
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
@@ -91,6 +101,10 @@ public class Player{
       velocity.z = 0;
     }
     
+    if (shoot == true && shootcool <= 0) {
+      shoot();
+    }
+
     
   }
   
@@ -108,11 +122,17 @@ public class Player{
   }
   
   void shoot(){
-    if ((shootcool <= 0) && (ammo > 0)) {
-      Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 20, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
+    if (ammo > 0 && shootcool <= 0) {
+      Bullet bullet;
+      if (ability == true && player == "Tobber") {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true);
+      }
+      else {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false);
+      }
       bullets.add(bullet);
       ammo -= 1;
-      shootcool = 60;
+      shootcool = shootmaxcool;
     }
   }
   
@@ -135,6 +155,10 @@ public class Player{
     if (keyCode == LEFT) {
       TURN[1] = false;
     }
+    if (keyCode == UP) {
+      shoot = false;
+    }
+
   }
   
   void press(){
@@ -160,26 +184,30 @@ public class Player{
       velocity.y = -10;
     }
     
-    if (keyCode == UP && shootcool <= 0){
-      shoot();
+    if (player == "Shadow") {
+      if (keyCode == UP){
+        shoot();
+      }
+      if (key == 'f' && powercool <= 0) { ///////////////// Becoming a shadow, indetectible for enemies and can go through them
+        powercool = 2500;
+        ability = true;
+      }
     }
-    
-    if (key == 'f' && powercool <= 0) {
-      if (player == "Alvin") { ///////////////// MOGGING
-        
-        
+    if (player == "Tobber") {
+      if (keyCode == UP) {
+        shoot = true;
       }
-      else if (player == "Alex") { ///////////////// TIME STOP
-        
-        
+      if (key == 'f' && powercool <= 0) { /////////////////  Homing bullets
+        ability = true;
+        powercool = 2500;
       }
-      else if (player == "Thamidur") { ///////////////// 
-        
-        
-      }
-      powercool = 150;
     }
-    
+    if (player == "Aria") {
+      if (key == 'f' && powercool <= 0) { ///////////////// TIME STOP
+        ability = true;
+        powercool = 2500;
+      }
+    }
   }
 }
   
