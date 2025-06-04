@@ -12,6 +12,7 @@ public class Player{
   int shootmaxcool = 0;
   
   int powercool = 0;
+  boolean ability = false;
   
   int ammo = 6;
   int maxammo = 6;
@@ -99,8 +100,7 @@ public class Player{
     if (shoot == true && shootcool <= 0) {
       shoot();
     }
-    
-    
+   
     
   }
   
@@ -119,7 +119,13 @@ public class Player{
   
   void shoot(){
     if (ammo > 0 && shootcool <= 0) {
-      Bullet bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true);
+      Bullet bullet;
+      if (ability == true && player == "Tobber") {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true);
+      }
+      else {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false);
+      }
       bullets.add(bullet);
       ammo -= 1;
       shootcool = shootmaxcool;
@@ -178,8 +184,8 @@ public class Player{
         shoot();
       }
       if (key == 'f' && powercool <= 0) { ///////////////// Becoming a shadow, indetectible for enemies and can go through them
-      
-        powercool = 150;
+        powercool = 2500;
+        ability = true;
       }
     }
     if (player == "Tobber") {
@@ -187,14 +193,14 @@ public class Player{
         shoot = true;
       }
       if (key == 'f' && powercool <= 0) { /////////////////  Homing bullets
-        
-        powercool = 150;
+        ability = true;
+        powercool = 2500;
       }
     }
     if (player == "Aria") {
       if (key == 'f' && powercool <= 0) { ///////////////// TIME STOP
-        
-        powercool = 150;
+        ability = true;
+        powercool = 2500;
       }
     }
   }

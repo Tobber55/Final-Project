@@ -1,7 +1,7 @@
 public class Tilemap{
   int[][] map = new int[32][32];
   
-  public Tilemap(){
+  public Tilemap() {
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map[i].length; j++) {
         if ((i == 0) || i == map.length - 1) {

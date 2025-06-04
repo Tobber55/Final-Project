@@ -11,14 +11,18 @@ boolean startscreen = true;
 
 Player player;
 Tilemap tilemap;
+int[][] entitymap;
 UI ui;
 
 void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
+  entitymap = new int[tilemap.tilemap().length][tilemap.tilemap().length];
   player = new Player();
   ui = new UI();
+  
+  entitymap[20][24] = 1;
   
   int[][] map = tilemap.tilemap();
   for (int x = 0; x < map.length; x ++){
@@ -78,6 +82,21 @@ void drawScene() {
       }
     }
   }
+  
+  
+  for (int j = 0; j < entitymap.length; j++) {
+      for (int k = 0; k < entitymap[j].length; k++) {
+        if (entitymap[j][k] > 0) {
+          pushMatrix();
+          fill(255, 100, 100);
+          translate(size * j, (floor - size / 2), size * k);
+          box(size);
+          popMatrix();
+        }
+      }
+    }
+    
+    
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
       bullet.position.x += bullet.dir.x * bullet.speed;
