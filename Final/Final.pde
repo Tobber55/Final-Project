@@ -12,12 +12,14 @@ boolean startscreen = true;
 Player player;
 Tilemap tilemap;
 int[][] entitymap;
+
 UI ui;
 
 void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
+
   entitymap = new int[tilemap.tilemap().length][tilemap.tilemap().length];
   player = new Player();
   ui = new UI();
@@ -48,6 +50,7 @@ void draw() {
   float turn = player.turn;
   camera(playerpos.x, playerpos.y, playerpos.z, playerpos.x + cos(radians(turn)), playerpos.y, playerpos.z + sin(radians(turn)), 0, 1, 0);
   
+
   
   if (startscreen == false) {
     background(120, 160, 200);
@@ -58,6 +61,7 @@ void draw() {
   else {
     ui.uiStart();
   }
+
 }
 
 
@@ -96,14 +100,15 @@ void drawScene() {
       }
     }
     
-    
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
       bullet.position.x += bullet.dir.x * bullet.speed;
       bullet.position.z += bullet.dir.y * bullet.speed;
       pushMatrix();
       fill(0, 0, 0);
-      translate(bullet.position.x, 100, bullet.position.z);
+
+      translate(bullet.position.x, bullet.position.y, bullet.position.z);
+
       sphere(size/8);
       popMatrix();
       if (bullet.collision()) bullets.remove(i);
@@ -118,6 +123,14 @@ void drawScene() {
       image(ammos.get(i).img, 0, 0);
       ammos.get(i).img.resize(64, 64);
       popMatrix();
+
+      //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));
+      if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
+      abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1 && player.ammo < 6){
+        player.ammo = 6;
+        tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
+        ammos.remove(i);
+      }
     }
   
 }
@@ -133,4 +146,5 @@ void keyPressed(){
 
 void mousePressed() {
   if (startscreen == true) startscreen = ui.readInput(new PVector(mouseX, mouseY), player);
+
 }

@@ -3,6 +3,7 @@ public class Bullet{
   int speed = 15;
   PVector position;
   boolean players;
+
   boolean homing;
   
   PVector target;
@@ -24,6 +25,7 @@ public class Bullet{
         }
       }
     }
+
     
     if (homing == true) {
       if (target == null) {
@@ -50,6 +52,7 @@ public class Bullet{
       }
       
     }
+
     return false;
   }
 }
