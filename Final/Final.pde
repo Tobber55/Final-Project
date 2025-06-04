@@ -98,8 +98,9 @@ void drawScene() {
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.position.x, player.position.z));
       if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
       abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1 && player.ammo < 6){
-        ammos.remove(i);
         player.ammo = 6;
+        tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
+        ammos.remove(i);
       }
     }
   
