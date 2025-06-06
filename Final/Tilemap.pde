@@ -21,6 +21,9 @@ public class Tilemap {
     map[12][10] = 5;
     
     //AMMO
+    map[9][10] = -1;
+    map[9][11] = -1;
+    map[9][12] = -1;
     map[9][13] = -1;
     
   }
