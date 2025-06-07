@@ -121,7 +121,7 @@ public class UI {
         fill(135, 206, 235);
         strokeWeight(2);
         stroke(255, 215, 0);
-       rect(50, 35, 180, 380);
+        rect(50, 35, 180, 380);
         textSize(20);
         
         fill(255);
