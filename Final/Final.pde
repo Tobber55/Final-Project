@@ -102,6 +102,11 @@ void drawScene() {
     
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
+      if (bullet.collision()) {
+        bullets.remove(i); 
+        println();
+        return;
+      }
       bullet.position.x += bullet.dir.x * bullet.speed;
       bullet.position.z += bullet.dir.y * bullet.speed;
       pushMatrix();
@@ -111,7 +116,7 @@ void drawScene() {
 
       sphere(size/8);
       popMatrix();
-      if (bullet.collision()) bullets.remove(i);
+      
     }
     
     for (int i = 0; i < ammos.size(); i ++){
