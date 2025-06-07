@@ -6,6 +6,7 @@ ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 ArrayList<Bullet> enemybullets = new ArrayList<Bullet>();
 
 ArrayList<Ammo> ammos = new ArrayList<Ammo>();
+ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
 boolean startscreen = true;
 
@@ -24,10 +25,10 @@ void setup() {
   player = new Player();
   ui = new UI();
   
-  entitymap[20][24] = 1;
+  enemies.add(new Enemy(new PVector(20, 24)));
   
   int[][] map = tilemap.tilemap();
-  for (int x = 0; x < map.length; x ++){
+  for (int x = 0; x < map.length; x ++) {
     for (int y = 0; y < map[0].length; y ++){
       if (map[x][y] == -1){
         PVector temp = new PVector(x, y);
@@ -91,17 +92,20 @@ void drawScene() {
   for (int j = 0; j < entitymap.length; j++) {
       for (int k = 0; k < entitymap[j].length; k++) {
         if (entitymap[j][k] > 0) {
-          pushMatrix();
-          fill(255, 100, 100);
-          translate(size * j, (floor - size / 2), size * k);
-          box(size);
-          popMatrix();
+        //  pushMatrix();
+        //  fill(255, 100, 100);
+        //  translate(size * j, (floor - size / 2), size * k);
+        //  println(new PVector(size * j, (floor - size / 2), size * k));
+        //  box(size);
+        //  popMatrix();
+          println(j + " " + k);
         }
       }
     }
     
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
+      if (bullet.collision()) bullets.remove(i); 
       bullet.position.x += bullet.dir.x * bullet.speed;
       bullet.position.z += bullet.dir.y * bullet.speed;
       pushMatrix();
@@ -111,8 +115,14 @@ void drawScene() {
 
       sphere(size/8);
       popMatrix();
-      if (bullet.collision()) bullets.remove(i);
     }
+    
+    
+    for (int i = 0; i < enemies.size(); i++) {
+      enemies.get(i).update();
+      
+    }
+    
     
     for (int i = 0; i < ammos.size(); i ++){
       pushMatrix();
@@ -136,12 +146,11 @@ void drawScene() {
 }
 
 void keyReleased(){
-  player.release();
+  if (startscreen == false) player.release();
 }
 
 void keyPressed(){
-  startscreen = false;
-  player.press();
+  if (startscreen == false) player.press();
 }
 
 void mousePressed() {
