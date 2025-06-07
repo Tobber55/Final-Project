@@ -17,7 +17,7 @@ public class Player{
   
   int ammo = 6;
   int maxammo = 6;
-  
+  int allammo = 0;
 
   int health = 100;
   int armor = 100;
@@ -133,9 +133,16 @@ public class Player{
       bullets.add(bullet);
       ammo -= 1;
       shootcool = shootmaxcool;
+    } else if (ammo == 0 && allammo > 0){
+      reload();
     }
   }
   
+  void reload(){
+    int temp = min(maxammo - ammo, allammo);
+    ammo += temp;
+    allammo -= temp;
+  }
   void release(){
     if (key == 'w'){
       WASD[0] = false;
@@ -173,6 +180,9 @@ public class Player{
     }
     if (key == 'd'){
       WASD[3] = true;
+    }
+    if (key == 'r' && allammo > 0 && ammo < maxammo){
+      reload();
     }
     if (keyCode == RIGHT) {
       TURN[0] = true;
