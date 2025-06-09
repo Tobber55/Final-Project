@@ -9,12 +9,11 @@ public class Enemy {
   PVector currentChunk;
   
   public Enemy(PVector chunk) {
-    this.position = new PVector(chunk.x * size, 168, chunk.y * size);
+    this.position = new PVector(chunk.x * size, 118, chunk.y * size);
     currentChunk = chunk;
   }
   
   public void update() {
-    
     currentChunk();
     
     position.add(velocity);
