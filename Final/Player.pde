@@ -121,17 +121,10 @@ public class Player{
     if (ammo > 0 && shootcool <= 0) {
       Bullet bullet;
       if (ability == true && player == "Tobber") {
-<<<<<<< Updated upstream
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true);
-      }
-      else {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 50, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false);
-=======
         bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true, player);
       }
       else {
         bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player);
->>>>>>> Stashed changes
       }
       bullets.add(bullet);
       ammo -= 1;
@@ -212,7 +205,4 @@ public class Player{
     }
   }
 }
-  
-  
-  
-  
+

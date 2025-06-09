@@ -11,24 +11,18 @@ boolean startscreen = true;
 
 Player player;
 Tilemap tilemap;
-<<<<<<< Updated upstream
-int[][] entitymap;
-=======
+
 Enemy[][] entitymap;
 
->>>>>>> Stashed changes
 UI ui;
 
 void setup() {
   size(800, 450, P3D);
   
   tilemap = new Tilemap();
-<<<<<<< Updated upstream
-  entitymap = new int[tilemap.tilemap().length][tilemap.tilemap().length];
-=======
-
+  
   entitymap = new Enemy[tilemap.tilemap().length][tilemap.tilemap().length];
->>>>>>> Stashed changes
+
   player = new Player();
   ui = new UI();
   
@@ -100,14 +94,6 @@ void drawScene() {
   
   for (int j = 0; j < entitymap.length; j++) {
       for (int k = 0; k < entitymap[j].length; k++) {
-<<<<<<< Updated upstream
-        if (entitymap[j][k] > 0) {
-          pushMatrix();
-          fill(255, 100, 100);
-          translate(size * j, (floor - size / 2), size * k);
-          box(size);
-          popMatrix();
-=======
         if (entitymap[j][k] != null) {
         //  pushMatrix();
         //  fill(255, 100, 100);
@@ -116,7 +102,6 @@ void drawScene() {
         //  box(size);
         //  popMatrix();
           println(j + " " + k);
->>>>>>> Stashed changes
         }
       }
     }
