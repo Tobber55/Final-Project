@@ -3,6 +3,10 @@ public class Enemy {
   PVector position;
   PVector velocity = new PVector(0, 0, 0);
   
+  int health = 100;
+  
+  int positionInArray = -1;
+  
   int maxspeed = 2;
   int rotation = 0;
   
@@ -14,8 +18,9 @@ public class Enemy {
   }
   
   public void update() {
-    println("position" + position);
     currentChunk();
+    
+    println(health);
     
     position.add(velocity);
     
@@ -32,6 +37,8 @@ public class Enemy {
     if (velocity.x * -1 < maxspeed * -1) velocity.x = -1 * maxspeed;
     if (velocity.z > maxspeed) velocity.z = maxspeed;
     if (velocity.z * -1 < maxspeed * -1) velocity.z = -1 * maxspeed;
+    
+    if (health <= 0) enemies.remove(positionInArray);
     
     //println(velocity);
     
@@ -51,10 +58,10 @@ public class Enemy {
     PVector chunk = new PVector(xcor, ycor);
     
     if (chunk != currentChunk) {
-      entitymap[(int)currentChunk.x][(int)currentChunk.y] -= 1;
-      entitymap[(int)chunk.x][(int)chunk.y] += 1;
+      entitymap[(int)currentChunk.x][(int)currentChunk.y] = null;
+      entitymap[(int)chunk.x][(int)chunk.y] = this;
       currentChunk = chunk;
     }
   }
 }
-  
+
