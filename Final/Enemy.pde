@@ -14,6 +14,7 @@ public class Enemy {
   }
   
   public void update() {
+    println("position" + position);
     currentChunk();
     
     position.add(velocity);

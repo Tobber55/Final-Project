@@ -7,12 +7,24 @@ public class Bullet {
   boolean homing;
   
   PVector target;
+  int targetnumber;
   
   public Bullet(PVector pos, PVector velocity, boolean p, boolean homing) {
     position = pos;
     dir = velocity.normalize();
     players = p;
     this.homing = homing;
+    if (homing){
+      targetnumber = 0;
+      float minimum = new PVector(enemies.get(0).position.x - position.x, enemies.get(0).position.z - position.z).mag();
+      for (int i = 1; i < enemies.size(); i ++){
+        PVector temp = enemies.get(targetnumber).position;
+        if (new PVector(temp.x - position.x, temp.z - position.z).mag() < minimum){
+          minimum = new PVector(temp.x - position.x, temp.z - position.z).mag();
+          targetnumber = i;
+        }
+      }
+    }
   }
   
   boolean collision() {
@@ -27,13 +39,13 @@ public class Bullet {
     }
     
     if (homing == true) {
-      int enemytarget = -1;
-      for (int i = 0; i < enemies.size(); i ++){
-        
+      if (enemies.get(targetnumber) != null){
+        target = enemies.get(targetnumber).position;
+        PVector temp = new PVector(target.x - position.x, target.z - position.z).normalize();
+        dir.x = lerp(dir.x, temp.x, 0.08);
+        dir.y = lerp(dir.y, temp.y, 0.08);
+        println("target" + target);
       }
-      PVector temp = new PVector(target.x - position.x, target.y - position.z).normalize();
-      dir.x = lerp(dir.x, temp.x, 0.08);
-      dir.y = lerp(dir.y, temp.y, 0.08);
     }
     if (entitymap[xcor][ycor] > 0) return(true);
     return false;

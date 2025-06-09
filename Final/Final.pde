@@ -87,21 +87,6 @@ void drawScene() {
       }
     }
   }
-  
-  
-  for (int j = 0; j < entitymap.length; j++) {
-      for (int k = 0; k < entitymap[j].length; k++) {
-        if (entitymap[j][k] > 0) {
-        //  pushMatrix();
-        //  fill(255, 100, 100);
-        //  translate(size * j, (floor - size / 2), size * k);
-        //  println(new PVector(size * j, (floor - size / 2), size * k));
-        //  box(size);
-        //  popMatrix();
-          println(j + " " + k);
-        }
-      }
-    }
     
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
