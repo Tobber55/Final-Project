@@ -6,7 +6,6 @@ public class Player{
   PVector velocity = new PVector(0,0,0);
   boolean[] WASD = {false, false, false, false};
   boolean[] TURN = {false, false};
-
   boolean shoot = false;
   
   int shootcool = 0;
@@ -18,7 +17,6 @@ public class Player{
   int ammo = 6;
   int maxammo = 6;
   
-
   int health = 100;
   int armor = 100;
   
@@ -72,12 +70,10 @@ public class Player{
     }
     
     if (TURN[0]) {
-
       turn += 1.5;
     }
     if (TURN[1]) {
       turn -= 1.5;
-
     }
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
@@ -104,7 +100,7 @@ public class Player{
     if (shoot == true && shootcool <= 0) {
       shoot();
     }
-
+   
     
   }
   
@@ -158,7 +154,6 @@ public class Player{
     if (keyCode == UP) {
       shoot = false;
     }
-
   }
   
   void press(){

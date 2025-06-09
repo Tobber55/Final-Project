@@ -5,7 +5,6 @@ public class UI {
   float turnOffset = 0;
   PVector wasdOffset = new PVector(0, 0);
   
-
   PImage sze = loadImage("Sze.png");
   PImage rudi = loadImage("Rudi.png");
   PImage alex = loadImage("Alex.png");
@@ -47,16 +46,14 @@ public class UI {
     scale(1/0.042, 1/0.032);
     scale(0.095, 0.07);
     
-
     if ((player.ammo < 100) && (player.ammo > 9)) text(player.ammo, -645, 440); 
     else text(player.ammo, -610, 440); 
-
     if (player.health >= 100) text(player.health + "%", -420, 440); //// CENTER
     else if ((player.health < 100) && (player.health > 9)) text(player.health + "%", -390, 440);
     else text(player.health + "%", -360, 440);
     text(player.armor + "%", 125, 440); 
     scale(1/0.095, 1/0.07);
-
+    
     
     if (player.player == "Shadow") {
       scale(0.0081, 0.007);
@@ -118,7 +115,7 @@ public class UI {
         fill(135, 206, 235);
         strokeWeight(2);
         stroke(255, 215, 0);
-HThamidur        rect(50, 35, 180, 380);
+        rect(50, 35, 180, 380);
         textSize(20);
         
         fill(255);
