@@ -26,6 +26,7 @@ void setup() {
   ui = new UI();
   
   enemies.add(new Enemy(new PVector(20, 24)));
+  //enemies.add(new Enemy(new PVector(3, 18)));
   
   int[][] map = tilemap.tilemap();
   for (int x = 0; x < map.length; x ++) {

@@ -32,7 +32,7 @@ public class Bullet {
     int ycor = round((position.z) / size);
     for (int x = -8; x < 9; x ++){
       for (int y = -8; y < 9; y ++){
-        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0){
+        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0 || entitymap[xcor][ycor] > 0){
           return true;
         }
       }
@@ -44,10 +44,8 @@ public class Bullet {
         PVector temp = new PVector(target.x - position.x, target.z - position.z).normalize();
         dir.x = lerp(dir.x, temp.x, 0.08);
         dir.y = lerp(dir.y, temp.y, 0.08);
-        println("target" + target);
       }
     }
-    if (entitymap[xcor][ycor] > 0) return(true);
     return false;
   }
 }
