@@ -6,6 +6,9 @@ public class Enemy {
   
   int health = 100;
   
+  int damage = 20;
+  int cooldown = 0;
+  
   int positionInArray = -1;
   
   int maxspeed = 2;
@@ -19,9 +22,10 @@ public class Enemy {
   }
   
   public void update() {
-    currentChunk();
     
-    println(health);
+    if (cooldown > 0) cooldown -= 1;
+    
+    currentChunk();
     
     position.add(velocity);
     
@@ -39,7 +43,28 @@ public class Enemy {
     if (velocity.z > maxspeed) velocity.z = maxspeed;
     if (velocity.z * -1 < maxspeed * -1) velocity.z = -1 * maxspeed;
     
-    if (health <= 0) enemies.remove(positionInArray);
+    if (health <= 0) {
+      
+      entitymap[(int)currentChunk.x][(int)currentChunk.y] = null;  ////////// Kills everything in that spot?
+      
+      enemies.remove(positionInArray);
+    }
+    
+    
+    println(currentChunk(player.position.x, player.position.z));
+    
+    if (cooldown <= 0) {
+      for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
+          if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
+            player.health -= damage - (damage * ((player.armor/100) - 1)); 
+            cooldown = 50;
+            println("popopd");
+            break;
+          }
+        }
+      }
+    }
     
     //println(velocity);
     
@@ -63,6 +88,19 @@ public class Enemy {
       entitymap[(int)chunk.x][(int)chunk.y] = this;
       currentChunk = chunk;
     }
+  }
+  
+  PVector currentChunk(float posx, float posz){
+    int xcor = 0;
+    int ycor = 0;
+    for (int i = 0; i < posx; i += size) {
+      xcor += 1;
+    }
+    for (int i = 0; i < posz; i += size) {
+      ycor += 1;
+    }
+    //println(xcor + " " + ycor);
+    return(new PVector(xcor, ycor));
   }
 }
   

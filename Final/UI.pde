@@ -52,6 +52,9 @@ public class UI {
     else if ((player.health < 100) && (player.health > 9)) text(player.health + "%", -390, 440);
     else text(player.health + "%", -360, 440);
     text(player.armor + "%", 125, 440); 
+    if ((player.allammo < 100) && (player.allammo > 9)) text(player.allammo, 515, 440); 
+    else if (player.allammo < 10) text(player.allammo, 545, 440);
+    else text(player.allammo, 490, 440);
     scale(1/0.095, 1/0.07);
     
     

@@ -16,8 +16,8 @@ public class Player{
   int powercool = 0;
   boolean ability = false;
   
-  int ammo = 6;
-  int maxammo = 6;
+  int ammo = 0;
+  int maxammo = 0;
   int allammo = 0;
 
   int health = 100;
@@ -40,6 +40,8 @@ public class Player{
     if (powercool > 0){
       powercool --;
     }
+    
+    if (health < 0) health = 0;
     
     position.add(velocity);
 
