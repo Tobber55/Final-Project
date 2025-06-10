@@ -16,6 +16,8 @@ public class Enemy {
   
   PVector currentChunk;
   
+  boolean inRange = false;
+  
   public Enemy(PVector chunk) {
     this.position = new PVector(chunk.x * size, 118, chunk.y * size);
     currentChunk = chunk;
@@ -36,8 +38,20 @@ public class Enemy {
     box(size);
     popMatrix();
     
-    velocity.x = (player.position.x - position.x)/100;
-    velocity.z = (player.position.z - position.z)/100;
+    
+    if (inRange == true) {
+      if (cooldown <= 0) {
+        player.health -= damage - (damage * ((player.armor/100) - 1)); 
+        cooldown = 50;
+      }
+      velocity.x = 0;
+      velocity.z = 0;
+    }
+    else {
+      velocity.x = (player.position.x - position.x)/100;
+      velocity.z = (player.position.z - position.z)/100;
+    }
+    
     if (velocity.x > maxspeed) velocity.x = maxspeed;
     if (velocity.x * -1 < maxspeed * -1) velocity.x = -1 * maxspeed;
     if (velocity.z > maxspeed) velocity.z = maxspeed;
@@ -53,15 +67,11 @@ public class Enemy {
     
     println(currentChunk(player.position.x, player.position.z));
     
-    if (cooldown <= 0) {
-      for (int i = -1; i < 2; i++) {
-        for (int j = -1; j < 2; j++) {
-          if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
-            player.health -= damage - (damage * ((player.armor/100) - 1)); 
-            cooldown = 50;
-            println("popopd");
-            break;
-          }
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
+          inRange = true;
+          break;
         }
       }
     }
