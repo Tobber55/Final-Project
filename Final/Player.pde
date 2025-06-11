@@ -129,17 +129,17 @@ public class Player{
     if (ammo > 0 && shootcool <= 0) {
       Bullet bullet;
       if (player == "Aria" && shootcool <= 0) {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 16);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 16, false);
         bullets.add(bullet);
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn + 25)) * 60, position.y + 30, position.z + sin(radians(turn + 25)) * 60), new PVector(cos(radians(turn + 25)), sin(radians(turn + 25))), true, false, player, 8);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn + 25)) * 60, position.y + 30, position.z + sin(radians(turn + 25)) * 60), new PVector(cos(radians(turn + 25)), sin(radians(turn + 25))), true, false, player, 8, false);
         bullets.add(bullet);
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn - 25)) * 60, position.y + 30, position.z + sin(radians(turn - 25)) * 60), new PVector(cos(radians(turn - 25)), sin(radians(turn - 25))), true, false, player, 8);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn - 25)) * 60, position.y + 30, position.z + sin(radians(turn - 25)) * 60), new PVector(cos(radians(turn - 25)), sin(radians(turn - 25))), true, false, player, 8, false);
       }
       else if (ability == true && player == "Tobber") {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true, player, 0);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true, player, 0, false);
       }
       else {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 0);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 0, false);
       }
       bullets.add(bullet);
       ammo -= 1;
