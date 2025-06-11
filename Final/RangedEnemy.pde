@@ -1,5 +1,7 @@
 public class RangedEnemy extends Enemy {
   
+  PImage img = loadImage("TemuBlaze.png");
+  
   public RangedEnemy(PVector chunk) {
     super(chunk);
   }
@@ -36,26 +38,32 @@ public class RangedEnemy extends Enemy {
     popMatrix();
     
     
-    if (inRange == true) {
+    if (inRange == true && playerinvis == 0) {
       if (cooldown <= 0) {
         float turn = PI - asin(temp.x) + HALF_PI;
         Bullet bullet;
         bullet = new Bullet(new PVector(position.x + cos(turn) * 60, position.y + 30, position.z + sin(turn) * 60), new PVector(cos(turn), sin(turn)), true, false, "", 16, true);
         bullets.add(bullet);
-        cooldown = 50;
+        cooldown = 90;
       }
       velocity.x = 0;
       velocity.z = 0;
     }
-    else {
+    else if (playerinvis == 0 && dist(position.x, position.z, player.position.x, player.position.z) < size * 5) {
       velocity.x = (player.position.x - position.x)/100;
       velocity.z = (player.position.z - position.z)/100;
+    } else {
+      if (playerinvis > 0){
+        playerinvis --;
+      }
+      if (frameCount % 60 == 0){
+        velocity.x = (random(200, 1700) - position.x)/100;
+        velocity.z = (random(200, 1700) - position.z)/100;
+      }
     }
     
-    if (velocity.x > maxspeed) velocity.x = maxspeed;
-    if (velocity.x * -1 < maxspeed * -1) velocity.x = -1 * maxspeed;
-    if (velocity.z > maxspeed) velocity.z = maxspeed;
-    if (velocity.z * -1 < maxspeed * -1) velocity.z = -1 * maxspeed;
+    velocity.x = constrain(velocity.x, maxspeed * -1, maxspeed);
+    velocity.z = constrain(velocity.z, maxspeed * -1, maxspeed);
     
     if (health <= 0) {
       
