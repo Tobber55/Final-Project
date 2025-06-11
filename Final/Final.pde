@@ -1,4 +1,4 @@
-int size = 64;
+int size = 80;
 int floor = 200;
 
 ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -25,16 +25,14 @@ void setup() {
   ui = new UI();
   
   enemies.add(new Enemy(new PVector(20, 24)));
+  enemies.add(new Enemy(new PVector(2, 2)));
+  enemies.add(new Enemy(new PVector(2, 9)));
   
-  int[][] map = tilemap.tilemap();
-  for (int x = 0; x < map.length; x ++) {
-    for (int y = 0; y < map[0].length; y ++){
-      if (map[x][y] == -1){
-        PVector temp = new PVector(x, y);
-        ammos.add(new Ammo(temp));
-      }
-    }
-  }
+  enemies.add(new Enemy(new PVector(1, 24)));
+  enemies.add(new Enemy(new PVector(20, 2)));
+  enemies.add(new Enemy(new PVector(24, 15)));
+  
+
 }
 
 void draw() {
@@ -68,7 +66,7 @@ void draw() {
 
 void drawScene() {
   int[][] temp = tilemap.tilemap();
-  
+
   pushMatrix();
   fill(100, 180, 100);
   translate(temp.length * size / 2, floor, temp[0].length * size / 2);
@@ -103,7 +101,7 @@ void drawScene() {
   
         translate(bullet.position.x, bullet.position.y, bullet.position.z);
   
-        sphere(size/8);
+        sphere(8);
         popMatrix();
       }
     }
@@ -128,8 +126,16 @@ void drawScene() {
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));
       if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
       abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1){
-        if (player.player != "Aria") player.allammo += player.maxammo;
-        else player.ammo = player.maxammo;
+        if (ammos.get(i).powerup == "ammo"){
+          if (player.player != "Aria") player.allammo += player.maxammo;
+          else player.ammo = player.maxammo;
+        } else if (ammos.get(i).powerup == "health"){
+          if (player.health < 100){
+            player.health = min(100, player.health + 10);
+          }
+        } else if (ammos.get(i).powerup == "armor"){
+          player.armor += 5;
+        }
         tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
         ammos.remove(i);
       }

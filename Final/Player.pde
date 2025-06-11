@@ -25,6 +25,9 @@ public class Player{
   
   String player = "";
   
+  boolean reloading = false;
+  int reloadtimer = 120;
+  
   public Player(){
     position.x = tilemap.tilemap().length * size / 2;
     position.y = 100;
@@ -32,6 +35,14 @@ public class Player{
   }
   
   void movement(){
+    if (reloading){
+      reloadtimer --;
+      if (reloadtimer == 0){
+        reloading = false;
+        reload();
+        reloadtimer = 120;
+      }
+    }
     
     if (shootcool > 0){
       shootcool --;
@@ -39,6 +50,11 @@ public class Player{
     
     if (powercool > 0){
       powercool --;
+    }
+    
+    if (ability && powercool == 2320){
+      ability = false;
+      maxspeed = 1;
     }
     
     if (health < 0) health = 0;
@@ -145,7 +161,7 @@ public class Player{
       ammo -= 1;
       shootcool = shootmaxcool;
     } else if (ammo == 0 && allammo > 0 && player != "Aria"){
-      reload();
+      reloading = true;
     }
   }
   
@@ -212,6 +228,10 @@ public class Player{
       if (key == 'f' && powercool <= 0) { ///////////////// Becoming a shadow, indetectible for enemies and can go through them
         powercool = 2500;
         ability = true;
+        maxspeed = 2;
+        for (int i = 0; i < enemies.size(); i++){
+          enemies.get(i).playerinvis = 600;
+        }
       }
     }
     if (player == "Tobber") {
@@ -230,6 +250,9 @@ public class Player{
       if (key == 'f' && powercool <= 0) { ///////////////// TIME STOP
         ability = true;
         powercool = 2500;
+        for (int i = 0; i < enemies.size(); i++){
+          enemies.get(i).timeslow = 600;
+        }
       }
     }
   }

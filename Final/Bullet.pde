@@ -23,11 +23,11 @@ public class Bullet {
     
     if (enemies.size() > 0 && homing){
       targetnumber = 0;
-      float minimum = new PVector(enemies.get(0).position.x - position.x, enemies.get(0).position.z - position.z).mag();
+      float minimum = dist(enemies.get(0).position.x, enemies.get(0).position.z, position.x, position.z);
       for (int i = 1; i < enemies.size(); i ++){
         PVector temp = enemies.get(targetnumber).position;
-        if (new PVector(temp.x - position.x, temp.z - position.z).mag() < minimum){
-          minimum = new PVector(temp.x - position.x, temp.z - position.z).mag();
+        if (dist(temp.x, temp.z, position.x, position.z) < minimum){
+          minimum = dist(temp.x, temp.z, position.x, position.z);
           targetnumber = i;
         }
       }
@@ -43,7 +43,7 @@ public class Bullet {
         if (tilemap.tilemap()[tempx][tempy] > 0 || entitymap[tempx][tempy] != null){
           if (entitymap[tempx][tempy] != null) {
             if (player == "Tobber") entitymap[tempx][tempy].health -= 15;
-            if (player == "Alvin") entitymap[tempx][tempy].health -= 50;
+            if (player == "Shadow") entitymap[tempx][tempy].health -= 50;
             if (player == "Aria") entitymap[tempx][tempy].health -= 30;
           }
           return(true);
