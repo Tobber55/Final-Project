@@ -1,4 +1,3 @@
-
 public class Enemy {
   
   PVector position;
@@ -18,6 +17,8 @@ public class Enemy {
   
   boolean inRange = false;
   
+  PImage img = loadImage("ammo.png");
+  
   public Enemy(PVector chunk) {
     this.position = new PVector(chunk.x * size, 118, chunk.y * size);
     currentChunk = chunk;
@@ -32,10 +33,26 @@ public class Enemy {
     position.add(velocity);
     
     pushMatrix();
-    fill(135, 70, 21);
     translate(position.x, position.y, position.z);
-    rotateX(rotation);
-    box(size);
+    PVector temp = new PVector(position.x - player.position.x, position.z - player.position.z);
+    temp.normalize();
+    if (temp.y < 0) {
+      if (temp.x >= 0) {
+        rotateY(PI - asin(temp.x));
+      } else {
+        rotateY(abs(asin(temp.x)) + PI);
+      }
+    } else {
+      if (temp.x >= 0) {
+        rotateY(asin(temp.x));
+      } else {
+        rotateY(2 * PI + (asin(temp.x)));
+      }
+    }
+    
+    translate(-32, 0, 0);
+    image(img, 0, 0);
+    img.resize(64, 64);
     popMatrix();
     
     
@@ -114,4 +131,3 @@ public class Enemy {
     return(new PVector(xcor, ycor));
   }
 }
-  

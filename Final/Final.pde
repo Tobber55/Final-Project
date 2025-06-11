@@ -1,4 +1,3 @@
-
 int size = 64;
 int floor = 200;
 
