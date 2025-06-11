@@ -142,7 +142,7 @@ public class Player{
   
   void shoot() {
     
-    if (ammo > 0 && shootcool <= 0) {
+    if (ammo > 0 && shootcool <= 0 && !reloading) {
       Bullet bullet;
       if (player == "Aria" && shootcool <= 0) {
         bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 16);
@@ -209,7 +209,7 @@ public class Player{
       WASD[3] = true;
     }
     if (key == 'r' && allammo > 0 && ammo < maxammo){
-      reload();
+      reloading = true;
     }
     if (keyCode == RIGHT) {
       TURN[0] = true;
