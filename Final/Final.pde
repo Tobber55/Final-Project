@@ -1,4 +1,3 @@
-
 int size = 64;
 int floor = 200;
 
@@ -12,7 +11,7 @@ boolean startscreen = true;
 
 Player player;
 Tilemap tilemap;
-int[][] entitymap;
+Enemy[][] entitymap;
 
 UI ui;
 
@@ -21,12 +20,11 @@ void setup() {
   
   tilemap = new Tilemap();
 
-  entitymap = new int[tilemap.tilemap().length][tilemap.tilemap().length];
+  entitymap = new Enemy[tilemap.tilemap().length][tilemap.tilemap().length];
   player = new Player();
   ui = new UI();
   
   enemies.add(new Enemy(new PVector(20, 24)));
-  //enemies.add(new Enemy(new PVector(3, 18)));
   
   int[][] map = tilemap.tilemap();
   for (int x = 0; x < map.length; x ++) {
@@ -70,6 +68,7 @@ void draw() {
 
 void drawScene() {
   int[][] temp = tilemap.tilemap();
+  
   pushMatrix();
   fill(100, 180, 100);
   translate(temp.length * size / 2, floor, temp[0].length * size / 2);
@@ -88,19 +87,25 @@ void drawScene() {
       }
     }
   }
+  
+  for (int i = 0; i < enemies.size(); i++) {
+    enemies.get(i).positionInArray = i;
+  }
     
     for (int i = 0; i < bullets.size(); i ++){
       Bullet bullet = bullets.get(i);
       if (bullet.collision()) bullets.remove(i); 
       bullet.position.x += bullet.dir.x * bullet.speed;
       bullet.position.z += bullet.dir.y * bullet.speed;
-      pushMatrix();
-      fill(0, 0, 0);
-
-      translate(bullet.position.x, bullet.position.y, bullet.position.z);
-
-      sphere(size/8);
-      popMatrix();
+      if (player.player != "Aria") {
+        pushMatrix();
+        fill(0, 0, 0);
+  
+        translate(bullet.position.x, bullet.position.y, bullet.position.z);
+  
+        sphere(size/8);
+        popMatrix();
+      }
     }
     
     
@@ -123,7 +128,8 @@ void drawScene() {
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));
       if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
       abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1){
-        player.allammo += player.maxammo;
+        if (player.player != "Aria") player.allammo += player.maxammo;
+        else player.ammo = player.maxammo;
         tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
         ammos.remove(i);
       }

@@ -1,7 +1,6 @@
-public class Tilemap {
+public class Tilemap{
   int[][] map = new int[32][32];
   
-
   public Tilemap() {
     for (int i = 0; i < map.length; i++) {
       for (int j = 0; j < map[i].length; j++) {
@@ -21,9 +20,6 @@ public class Tilemap {
     map[12][10] = 5;
     
     //AMMO
-    map[9][10] = -1;
-    map[9][11] = -1;
-    map[9][12] = -1;
     map[9][13] = -1;
     
   }
