@@ -68,7 +68,7 @@ public class UI {
       scale(1/0.007, 1/0.007);
     }
     if (player.player == "Tobber") {
-      println(player.powercool);
+      //println(player.powercool);
       scale(0.0063, 0.0055);
       if (player.powercool != 0) tint(255, 255 - (255 / (2500.0 / player.powercool)));
       image(rudi, -1500, 3800);
@@ -187,7 +187,7 @@ public class UI {
         textSize(20);
         
         fill(255);
-        text("The boy who can control time. His insane martial arts skills allows him to tear a hole through time, breifly slowing everything while he can still move.", 565, 60, 150, 380);
+        text("The boy who can control time. His insane martial arts skills allows him to tear a hole through time, briefly slowing everything while he can still move.", 565, 60, 150, 380);
         textSize(17);
         strokeWeight(1);
         text("Weapon", 570, 335);
@@ -223,6 +223,7 @@ public class UI {
         player.player = "Tobber";
         player.maxammo = 30;
         player.ammo = player.maxammo;
+        player.allammo = player.maxammo;
         player.shootmaxcool = 10;
         stage = 3;
         return(false);
@@ -233,6 +234,7 @@ public class UI {
         player.player = "Shadow";
         player.maxammo = 6;
         player.ammo = player.maxammo;
+        player.allammo = player.maxammo;
         player.shootmaxcool = 60;
         stage = 3;
         return(false);
@@ -243,11 +245,12 @@ public class UI {
         player.player = "Aria";
         player.maxammo = 100;
         player.ammo = player.maxammo;
-        player.shootmaxcool = 10;
+        player.shootmaxcool = 30;
         player.armor = 120;
         stage = 3;
         return(false);
       }
+      
     }
     return(true);
   }
