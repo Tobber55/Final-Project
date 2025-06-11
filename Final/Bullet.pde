@@ -21,7 +21,7 @@ public class Bullet {
     this.player = player;
     if (player == "Aria") this.range = range;
     
-    if (homing){
+    if (enemies.size() > 0 && homing){
       targetnumber = 0;
       float minimum = new PVector(enemies.get(0).position.x - position.x, enemies.get(0).position.z - position.z).mag();
       for (int i = 1; i < enemies.size(); i ++){
@@ -35,11 +35,17 @@ public class Bullet {
   }
   
   boolean collision() {
-    int xcor = round((position.x) / size);
-    int ycor = round((position.z) / size);
+    if (enemies.size() <= targetnumber) homing = false;
     for (int x = -8; x < 9; x ++){
       for (int y = -8; y < 9; y ++){
-        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0){
+        int tempx = round((position.x + x) / size);
+        int tempy = round((position.z + y) / size);
+        if (tilemap.tilemap()[tempx][tempy] > 0 || entitymap[tempx][tempy] != null){
+          if (entitymap[tempx][tempy] != null) {
+            if (player == "Tobber") entitymap[tempx][tempy].health -= 15;
+            if (player == "Alvin") entitymap[tempx][tempy].health -= 50;
+            if (player == "Aria") entitymap[tempx][tempy].health -= 30;
+          }
           return(true);
         }
       }
@@ -57,14 +63,8 @@ public class Bullet {
       }
     }
     
-    if (entitymap[xcor][ycor] != null) {
-      if (player == "Tobber") entitymap[xcor][ycor].health -= 15;
-      if (player == "Alvin") entitymap[xcor][ycor].health -= 50;
-      if (player == "Aria") entitymap[xcor][ycor].health -= 30;
-      return(true);
-    }
+    
     return(false);
   }
 }
   
-

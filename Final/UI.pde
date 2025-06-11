@@ -68,7 +68,7 @@ public class UI {
       scale(1/0.007, 1/0.007);
     }
     if (player.player == "Tobber") {
-      println(player.powercool);
+      //println(player.powercool);
       scale(0.0063, 0.0055);
       if (player.powercool != 0) tint(255, 255 - (255 / (2500.0 / player.powercool)));
       image(rudi, -1500, 3800);
