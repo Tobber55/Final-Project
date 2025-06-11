@@ -17,13 +17,13 @@ public class Enemy {
   
   boolean inRange = false;
   
-  PImage img = loadImage("ammo.png");
+  PImage img = loadImage("TemuCthulhu.png");
   
   int playerinvis = 0;
   int timeslow = 0;
   
   public Enemy(PVector chunk) {
-    this.position = new PVector(chunk.x * size, 118, chunk.y * size);
+    this.position = new PVector(chunk.x * size, 108, chunk.y * size);
     currentChunk = chunk;
   }
   
@@ -62,7 +62,7 @@ public class Enemy {
     
     translate(-32, 0, 0);
     image(img, 0, 0);
-    img.resize(64, 64);
+    img.resize(80, 80);
     popMatrix();
     
     
@@ -103,8 +103,10 @@ public class Enemy {
           ammo.powerup = "ammo";
         } else if (random(1) < 0.5){
           ammo.powerup = "health";
+          ammo.img = loadImage("health.png");
         } else {
           ammo.powerup = "armor";
+          ammo.img = loadImage("sheild.png");
         }
         ammos.add(ammo);
       }

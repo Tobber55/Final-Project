@@ -129,15 +129,18 @@ void drawScene() {
         if (ammos.get(i).powerup == "ammo"){
           if (player.player != "Aria") player.allammo += player.maxammo;
           else player.ammo = player.maxammo;
+          tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
+          ammos.remove(i);
         } else if (ammos.get(i).powerup == "health"){
           if (player.health < 100){
             player.health = min(100, player.health + 10);
           }
         } else if (ammos.get(i).powerup == "armor"){
           player.armor += 5;
+          tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
+          ammos.remove(i);
         }
-        tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
-        ammos.remove(i);
+        
       }
     }
   
