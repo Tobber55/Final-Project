@@ -1,7 +1,11 @@
+
 public class Bullet {
   PVector dir;
   int speed = 15;
   PVector position;
+  
+  Player playerr;
+  
   boolean players;
 
   boolean homing;
@@ -13,12 +17,16 @@ public class Bullet {
   
   int range = -1;
   
-  public Bullet(PVector pos, PVector velocity, boolean p, boolean homing, String player, int range) {
+  boolean enemy;
+  
+  public Bullet(PVector pos, PVector velocity, boolean p, boolean homing, String player, int range, boolean enemy) {
+
     position = pos;
     dir = velocity.normalize();
     players = p;
     this.homing = homing;
     this.player = player;
+
     if (player == "Aria") this.range = range;
     
     if (enemies.size() > 0 && homing){
@@ -28,6 +36,7 @@ public class Bullet {
         PVector temp = enemies.get(targetnumber).position;
         if (dist(temp.x, temp.z, position.x, position.z) < minimum){
           minimum = dist(temp.x, temp.z, position.x, position.z);
+
           targetnumber = i;
         }
       }
@@ -35,6 +44,7 @@ public class Bullet {
   }
   
   boolean collision() {
+
     if (enemies.size() <= targetnumber) homing = false;
     for (int x = -8; x < 9; x ++){
       for (int y = -8; y < 9; y ++){
@@ -63,6 +73,37 @@ public class Bullet {
       }
     }
     
+
+    if (enemy == false) {
+      if (entitymap[xcor][ycor] != null) {
+        if (player == "Tobber") entitymap[xcor][ycor].health -= 15;
+        if (player == "Alvin") entitymap[xcor][ycor].health -= 50;
+        if (player == "Aria") entitymap[xcor][ycor].health -= 30;
+        return(true);
+      }
+    }
+    else {
+      println(xcor + ", " + currentChunk(playerr.position.x, playerr.position.y).x);
+      if (xcor == currentChunk(playerr.position.x, playerr.position.y).x && ycor == currentChunk(playerr.position.x, playerr.position.y).y) {
+        playerr.health -= 20 - (20 * ((playerr.armor/100) - 1)); 
+      }
+    }
+    return(false);
+  }
+  
+  PVector currentChunk(float posx, float posz){
+    int xcor = 0;
+    int ycor = 0;
+    for (int i = 0; i < posx; i += size) {
+      xcor += 1;
+    }
+    for (int i = 0; i < posz; i += size) {
+      ycor += 1;
+    }
+    //println(xcor + " " + ycor);
+    return(new PVector(xcor, ycor));
+  }
+}
     
     return(false);
   }
