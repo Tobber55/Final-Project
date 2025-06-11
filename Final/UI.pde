@@ -30,14 +30,16 @@ public class UI {
     rect(turnOffset - 10, 30, 1, 18);
     rect(turnOffset - 42, 30, 1, 18);
     
-    fill(0, 0, 0);
+    if (player.powercool > 0) fill(0, 0, 0);
+    else fill(47, 1, 88);
     rect(turnOffset, 30, 19, 18);
     
     fill(178, 190, 181);
     textSize(128);
     textMode(MODEL);
     scale(0.042, 0.032);
-    text("AMMO", -1480, 1125); 
+    if (player.player == "Aria") text("STAMINA", -1540, 1125); 
+    else text("AMMO", -1480, 1125); 
     text("HEALTH", -850, 1125); 
     text("ARMOR", 420, 1125); 
     text("ARMS", 1150, 1125); 
@@ -46,33 +48,39 @@ public class UI {
     scale(1/0.042, 1/0.032);
     scale(0.095, 0.07);
     
-    if ((player.ammo < 100) && (player.ammo > 9)) text(player.ammo, -645, 440); 
+    if (player.ammo >= 100) text(player.ammo, -670, 440); 
+    else if ((player.ammo < 100) && (player.ammo > 9)) text(player.ammo, -645, 440); 
     else text(player.ammo, -610, 440); 
     if (player.health >= 100) text(player.health + "%", -420, 440); //// CENTER
     else if ((player.health < 100) && (player.health > 9)) text(player.health + "%", -390, 440);
     else text(player.health + "%", -360, 440);
     text(player.armor + "%", 125, 440); 
     if ((player.allammo < 100) && (player.allammo > 9)) text(player.allammo, 515, 440); 
-    else if (player.allammo < 10) text(player.allammo, 545, 440);
+    else if (player.allammo < 10) text(player.allammo, 535, 440);
     else text(player.allammo, 490, 440);
     scale(1/0.095, 1/0.07);
     
     
     if (player.player == "Shadow") {
       scale(0.0081, 0.007);
+      if (player.powercool != 0) tint(255, 255 - (255 / (2500.0 / player.powercool)));
       image(sze, -1200, 3100);
       scale(1/0.007, 1/0.007);
     }
     if (player.player == "Tobber") {
+      println(player.powercool);
       scale(0.0063, 0.0055);
+      if (player.powercool != 0) tint(255, 255 - (255 / (2500.0 / player.powercool)));
       image(rudi, -1500, 3800);
       scale(1/0.0063, 1/0.0055);
     }
     if (player.player == "Aria") {
       scale(0.0075, 0.007);
+      if (player.powercool != 0) tint(255, 255 - (255 / (2500.0 / player.powercool)));
       image(alex, -1285, 3100);
       scale(1/0.0075, 1/0.007);
     }
+    tint(255, 255);
   }
   
   public void uiStart() {
@@ -233,9 +241,10 @@ public class UI {
         stroke(0);
         strokeWeight(1);
         player.player = "Aria";
-        player.maxammo = 0;
+        player.maxammo = 100;
         player.ammo = player.maxammo;
         player.shootmaxcool = 10;
+        player.armor = 120;
         stage = 3;
         return(false);
       }

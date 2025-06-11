@@ -64,9 +64,6 @@ public class Enemy {
       enemies.remove(positionInArray);
     }
     
-    
-    println(currentChunk(player.position.x, player.position.z));
-    
     inRange = inRange();
     
     //println(velocity);

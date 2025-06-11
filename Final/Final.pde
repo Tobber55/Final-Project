@@ -98,13 +98,15 @@ void drawScene() {
       if (bullet.collision()) bullets.remove(i); 
       bullet.position.x += bullet.dir.x * bullet.speed;
       bullet.position.z += bullet.dir.y * bullet.speed;
-      pushMatrix();
-      fill(0, 0, 0);
-
-      translate(bullet.position.x, bullet.position.y, bullet.position.z);
-
-      sphere(size/8);
-      popMatrix();
+      if (player.player != "Aria") {
+        pushMatrix();
+        fill(0, 0, 0);
+  
+        translate(bullet.position.x, bullet.position.y, bullet.position.z);
+  
+        sphere(size/8);
+        popMatrix();
+      }
     }
     
     
@@ -127,7 +129,8 @@ void drawScene() {
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));
       if (abs(ammos.get(i).currentChunk.x - player.currentChunk(player.position.x, player.position.z).x) <= 1 &&
       abs(ammos.get(i).currentChunk.y - player.currentChunk(player.position.x, player.position.z).y) <= 1){
-        player.allammo += player.maxammo;
+        if (player.player != "Aria") player.allammo += player.maxammo;
+        else player.ammo = player.maxammo;
         tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
         ammos.remove(i);
       }

@@ -43,6 +43,8 @@ public class Player{
     
     if (health < 0) health = 0;
     
+    if (ammo < 0) ammo = 0;
+    
     position.add(velocity);
 
     velocity.x = constrain(velocity.x, -1 * maxspeed, maxspeed);
@@ -75,12 +77,10 @@ public class Player{
     }
     
     if (TURN[0]) {
-
       turn += 1.5;
     }
     if (TURN[1]) {
       turn -= 1.5;
-
     }
     
     if (WASD[0] || WASD[1] || WASD[2] || WASD[3]){
@@ -124,19 +124,27 @@ public class Player{
     return(new PVector(xcor, ycor));
   }
   
-  void shoot(){
+  void shoot() {
+    
     if (ammo > 0 && shootcool <= 0) {
       Bullet bullet;
-      if (ability == true && player == "Tobber") {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true, player);
+      if (player == "Aria" && shootcool <= 0) {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 16);
+        bullets.add(bullet);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn + 25)) * 60, position.y + 30, position.z + sin(radians(turn + 25)) * 60), new PVector(cos(radians(turn + 25)), sin(radians(turn + 25))), true, false, player, 8);
+        bullets.add(bullet);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn - 25)) * 60, position.y + 30, position.z + sin(radians(turn - 25)) * 60), new PVector(cos(radians(turn - 25)), sin(radians(turn - 25))), true, false, player, 8);
+      }
+      else if (ability == true && player == "Tobber") {
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, true, player, 0);
       }
       else {
-        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player);
+        bullet = new Bullet(new PVector(position.x + cos(radians(turn)) * 60, position.y + 30, position.z + sin(radians(turn)) * 60), new PVector(cos(radians(turn)), sin(radians(turn))), true, false, player, 0);
       }
       bullets.add(bullet);
       ammo -= 1;
       shootcool = shootmaxcool;
-    } else if (ammo == 0 && allammo > 0){
+    } else if (ammo == 0 && allammo > 0 && player != "Aria"){
       reload();
     }
   }
@@ -216,6 +224,9 @@ public class Player{
       }
     }
     if (player == "Aria") {
+      if (keyCode == UP) {
+        shoot = true;
+      }
       if (key == 'f' && powercool <= 0) { ///////////////// TIME STOP
         ability = true;
         powercool = 2500;
