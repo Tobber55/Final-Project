@@ -67,17 +67,21 @@ public class Enemy {
     
     println(currentChunk(player.position.x, player.position.z));
     
-    for (int i = -1; i < 2; i++) {
-      for (int j = -1; j < 2; j++) {
-        if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
-          inRange = true;
-          break;
-        }
-      }
-    }
+    inRange = inRange();
     
     //println(velocity);
     
+  }
+  
+  boolean inRange() {
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
+          return(true);
+        }
+      }
+    }
+    return(false);
   }
   
   void currentChunk() {
