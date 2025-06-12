@@ -11,8 +11,17 @@ public class UI {
   
   PImage handSzeUp = loadImage("SzeHandUp.png");
   PImage handSzeDown = loadImage("SzeHandDown.png");
+  
   PImage handRudi = loadImage("RudiHand.png");
   
+  PImage handShaoIn = loadImage("ShaoHandIn.png");
+  PImage handShaoOut = loadImage("ShaoHandOut.png");
+  
+  PImage logo = loadImage("logo.png");
+  
+  PImage trophy = loadImage("Trophy.png");
+  
+
   boolean startscreen = true;
   
   int stage = 1;
@@ -30,6 +39,32 @@ public class UI {
       image(handRudi, 700, -100);
       scale(1/0.02, 1/0.02);
     }
+
+    if (player.player == "Shadow") {
+      if (player.shootcool > 0) {
+        scale(0.035, 0.035);
+        image(handSzeUp, 700, -450);
+        scale(1/0.035, 1/0.035);
+      }
+      else {
+        scale(0.035, 0.035);
+        image(handSzeDown, 400, -100);
+        scale(1/0.035, 1/0.035);
+      }
+    }
+    if (player.player == "Aria") {
+      if (player.shootcool > 0) {
+        scale(0.035, 0.035);
+        image(handShaoOut, 400, -50);
+        scale(1/0.035, 1/0.035);
+      }
+      else {
+        scale(0.035, 0.035);
+        image(handShaoIn, 400, -300);
+        scale(1/0.035, 1/0.035);
+      }
+    }
+
     
     fill(120,120,120);
     rect(0, 30, 155, 18);
@@ -93,31 +128,59 @@ public class UI {
     tint(255, 255);
   }
   
+  public void uiEnd() {
+    camera();
+    background(0);
+    
+    fill(255, 0, 0);
+    strokeWeight(5);
+    scale(0.6, 0.6);
+    text("Game Over", 350, 300);
+    scale(1/0.6, 1/0.6);
+  }
+  
+  public void winScreen() {
+    camera();
+    background(0);
+    
+    fill(229, 212, 16);
+    strokeWeight(10);
+    scale(0.8, 0.8);
+    text("You Win", 290, 200);
+    scale(1/0.6, 1/0.6);
+    scale(0.15, 0.15);
+    image(trophy, 1550, 1200);
+    scale(1/0.15, 1/0.15);
+  }
+  
   public void uiStart() {
     camera();
     background(0);
     
     // Start Button
     if (stage == 1) {
-      if ((mouseX > 275) && (mouseX < 525) && (mouseY > 250) && (mouseY < 325)) {
+      scale(0.7, 0.7);
+      image(logo, 270, 40);
+      scale(1/0.7, 1/0.7);
+      if ((mouseX > 275) && (mouseX < 525) && (mouseY > 250 + 35) && (mouseY < 325 + 35)) {
         fill(218, 165, 32);
         stroke(255, 215, 0);
-        rect(275, 250, 250, 75);
+        rect(275, 285, 250, 75);
         textSize(40);
         
         fill(255);
         strokeWeight(5);
-        text("Start", 350, 300);
+        text("Start", 350, 335);
       }
       else {
         fill(120,120,120);
         stroke(255, 215, 0);
-        rect(275, 250, 250, 75);
+        rect(275, 285, 250, 75);
         textSize(40);
         
         fill(255);
         strokeWeight(5);
-        text("Start", 350, 300); 
+        text("Start", 350, 335); 
       }
     }
     else if (stage == 2) {
@@ -144,12 +207,12 @@ public class UI {
         text("After tinkering for weeks, he has enhanced his finger gun to support full-auto. This allows the bullets to home into enemies for a few seconds at a time.", 65, 60, 150, 380);
         textSize(17);
         strokeWeight(1);
-        text("Weapon", 70, 335);
-        line(70, 335, 70 + textWidth("Weapon"), 335);
-        text("Finger Rifle", 60, 400);
-        text("Ability", 165, 335);
-        line(165, 335, 165 + textWidth("Ability"), 335);
-        text("Homing", 159, 400);
+        text("Weapon", 70, 360);
+        line(70, 360, 70 + textWidth("Weapon"), 360);
+        text("Finger Rifle", 60, 385);
+        text("Ability", 165, 360);
+        line(165, 360, 165 + textWidth("Ability"), 360);
+        text("Homing", 159, 385);
       }
       if (!((mouseX > 300) && (mouseX < 480) && (mouseY > 35) && (mouseY < 415))) {
         fill(210, 43, 43);
@@ -172,12 +235,12 @@ public class UI {
         text("Following 17 years of training, he has mastered the art of emo. Able to temporarily become a shadow, he is intangible and indetectable to all enemies.", 315, 60, 150, 380);
         textSize(17);
         strokeWeight(1);
-        text("Weapon", 320, 335);
-        line(320, 335, 320 + textWidth("Weapon"), 335);
-        text("Finger Gun", 312, 400);
-        text("Ability", 415, 335);
-        line(415, 335, 415 + textWidth("Ability"), 335);
-        text("Shadow", 409, 400);
+        text("Weapon", 320, 360);
+        line(320, 360, 320 + textWidth("Weapon"), 360);
+        text("Finger Gun", 312, 385);
+        text("Ability", 415, 360);
+        line(415, 360, 415 + textWidth("Ability"), 360);
+        text("Shadow", 409, 385);
       }
       if (!((mouseX > 550) && (mouseX < 730) && (mouseY > 35) && (mouseY < 415))) {
         fill(76, 187, 23);
@@ -200,12 +263,12 @@ public class UI {
         text("The boy who can control time. His insane martial arts skills allows him to tear a hole through time, briefly slowing everything while he can still move.", 565, 60, 150, 380);
         textSize(17);
         strokeWeight(1);
-        text("Weapon", 570, 335);
-        line(570, 335, 570 + textWidth("Weapon"), 335);
-        text("Boxing Glove", 556, 400);
-        text("Ability", 665, 335);
-        line(665, 335, 665 + textWidth("Ability"), 335);
-        text("Time Stop", 654, 400);
+        text("Weapon", 570, 360);
+        line(570, 360, 570 + textWidth("Weapon"), 360);
+        text("Boxing Glove", 556, 385);
+        text("Ability", 665, 360);
+        line(665, 360, 665 + textWidth("Ability"), 360);
+        text("Time Stop", 654, 385);
       }
     }
     

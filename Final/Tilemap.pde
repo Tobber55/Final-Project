@@ -41,6 +41,7 @@ public class Tilemap{
     for(int i = 0; i < 24; i ++){
       map[43][i] = int(random(4, 7));
     }
+
   }
   
   public int[][] tilemap(){

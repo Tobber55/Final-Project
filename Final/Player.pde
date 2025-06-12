@@ -45,6 +45,15 @@ public class Player{
       }
     }
     
+    if (reloading){
+      reloadtimer --;
+      if (reloadtimer == 0){
+        reloading = false;
+        reload();
+        reloadtimer = 120;
+      }
+    }
+    
     if (shootcool > 0){
       shootcool --;
     }

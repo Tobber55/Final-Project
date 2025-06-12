@@ -1,3 +1,4 @@
+
 public class Ammo{
   PVector currentChunk;
   PImage img = loadImage("ammo.png");
@@ -8,3 +9,4 @@ public class Ammo{
     currentChunk = pos;
   }
 }
+

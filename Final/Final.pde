@@ -23,6 +23,7 @@ void setup() {
   player = new Player();
   ui = new UI();
   
+
   enemies.add(new Enemy(new PVector(5, 4)));
   enemies.add(new Enemy(new PVector(19, 5)));
   enemies.add(new Enemy(new PVector(11, 7)));
@@ -83,16 +84,22 @@ void draw() {
   
 
   
-  if (startscreen == false) {
+
+  if (startscreen == false && player.health > 0 && enemies.size() != 0) {
     background(120, 160, 200);
     drawScene();
     player.movement();
     ui.update(player);
   }
+  else if (player.health <= 0) {
+    ui.uiEnd();
+  }
+  else if (enemies.size() == 0) {
+    ui.winScreen();
+  }
   else {
     ui.uiStart();
   }
-
 }
 
 
@@ -163,6 +170,7 @@ void drawScene() {
       translate(size * ammos.get(i).currentChunk.x, 100, size * ammos.get(i).currentChunk.y);
       rotateY(frameCount * 0.05);
       translate(-32, 0, 0);
+
       image(ammos.get(i).img, 0, 0);
       ammos.get(i).img.resize(64, 64);
       popMatrix();
