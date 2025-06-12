@@ -40,10 +40,12 @@ public class RangedEnemy extends Enemy {
     
     if (inRange == true && playerinvis == 0) {
       if (cooldown <= 0) {
-        float tempp = temp.x;
-        if (tempp <= -1) tempp = 0;
-        float turn = PI - asin(tempp) + HALF_PI;
-        //println(tempp);
+        float turn;
+        if (temp.y > 0){
+          turn = PI - asin(temp.x) + HALF_PI;
+        } else {
+          turn = -1 * (PI - asin(temp.x) + HALF_PI);       
+        }
         Bullet bullet;
         bullet = new Bullet(new PVector(position.x + cos(turn) * 60, position.y + 30, position.z + sin(turn) * 60), new PVector(cos(turn), sin(turn)), true, false, "", 16, true);
         bullets.add(bullet);

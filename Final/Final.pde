@@ -23,15 +23,50 @@ void setup() {
   player = new Player();
   ui = new UI();
   
-  enemies.add(new Enemy(new PVector(20, 24)));
-  enemies.add(new RangedEnemy(new PVector(24, 24)));
-  enemies.add(new Enemy(new PVector(2, 2)));
-  enemies.add(new Enemy(new PVector(2, 9)));
+
+  enemies.add(new Enemy(new PVector(5, 4)));
+  enemies.add(new Enemy(new PVector(19, 5)));
+  enemies.add(new Enemy(new PVector(11, 7)));
+  enemies.add(new Enemy(new PVector(5, 10)));
+  enemies.add(new Enemy(new PVector(10, 10)));
   
-  enemies.add(new Enemy(new PVector(1, 24)));
-  enemies.add(new Enemy(new PVector(20, 2)));
-  enemies.add(new Enemy(new PVector(24, 15)));
+  enemies.add(new Enemy(new PVector(16, 10)));
+  enemies.add(new Enemy(new PVector(6, 13)));
+  enemies.add(new Enemy(new PVector(10, 15)));
+  enemies.add(new Enemy(new PVector(19, 16)));
+  enemies.add(new Enemy(new PVector(12, 18)));
   
+  enemies.add(new Enemy(new PVector(53, 16)));
+  enemies.add(new Enemy(new PVector(51, 19)));
+  enemies.add(new Enemy(new PVector(11, 32)));
+  enemies.add(new Enemy(new PVector(5, 38)));
+  enemies.add(new Enemy(new PVector(18, 35)));
+  
+  enemies.add(new Enemy(new PVector(57, 32)));
+  enemies.add(new Enemy(new PVector(58, 36)));
+  enemies.add(new Enemy(new PVector(54, 40)));
+  enemies.add(new Enemy(new PVector(43, 41)));
+  enemies.add(new Enemy(new PVector(35, 41)));
+  
+  enemies.add(new Enemy(new PVector(7, 57)));
+  enemies.add(new Enemy(new PVector(16, 55)));
+  enemies.add(new Enemy(new PVector(24, 54)));
+  
+  enemies.add(new RangedEnemy(new PVector(5, 27)));
+  enemies.add(new RangedEnemy(new PVector(53, 5)));
+  enemies.add(new RangedEnemy(new PVector(59, 8)));
+  enemies.add(new RangedEnemy(new PVector(47, 10)));
+  enemies.add(new RangedEnemy(new PVector(32, 12)));
+  
+  enemies.add(new RangedEnemy(new PVector(36, 16)));
+  enemies.add(new RangedEnemy(new PVector(46, 16)));
+  enemies.add(new RangedEnemy(new PVector(60, 17)));
+  enemies.add(new RangedEnemy(new PVector(39, 29)));
+  enemies.add(new RangedEnemy(new PVector(31, 38)));
+  
+  enemies.add(new RangedEnemy(new PVector(28, 41)));
+  enemies.add(new RangedEnemy(new PVector(30, 45)));
+
 }
 
 void draw() {
@@ -49,6 +84,7 @@ void draw() {
   
 
   
+
   if (startscreen == false && player.health > 0 && enemies.size() != 0) {
     background(120, 160, 200);
     drawScene();
@@ -134,14 +170,9 @@ void drawScene() {
       translate(size * ammos.get(i).currentChunk.x, 100, size * ammos.get(i).currentChunk.y);
       rotateY(frameCount * 0.05);
       translate(-32, 0, 0);
-      if (player.player == "Aria") {
-        image(ammos.get(i).img2, 0, 0);
-        ammos.get(i).img2.resize(64, 64);
-      }
-      else {
-        image(ammos.get(i).img, 0, 0);
-        ammos.get(i).img.resize(64, 64);
-      }
+
+      image(ammos.get(i).img, 0, 0);
+      ammos.get(i).img.resize(64, 64);
       popMatrix();
 
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));

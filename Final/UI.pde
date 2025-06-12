@@ -21,6 +21,7 @@ public class UI {
   
   PImage trophy = loadImage("Trophy.png");
   
+
   boolean startscreen = true;
   
   int stage = 1;
@@ -38,6 +39,7 @@ public class UI {
       image(handRudi, 700, -100);
       scale(1/0.02, 1/0.02);
     }
+
     if (player.player == "Shadow") {
       if (player.shootcool > 0) {
         scale(0.035, 0.035);
@@ -62,6 +64,7 @@ public class UI {
         scale(1/0.035, 1/0.035);
       }
     }
+
     
     fill(120,120,120);
     rect(0, 30, 155, 18);
