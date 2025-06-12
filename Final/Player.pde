@@ -29,13 +29,13 @@ public class Player{
   int reloadtimer = 120;
   
   public Player(){
-    position.x = tilemap.tilemap().length * size / 2;
+    position.x = 4800;
     position.y = 100;
-    position.z = tilemap.tilemap()[0].length * size / 2; 
+    position.z = 4800; 
   }
   
   void movement(){
-    
+    println(position);
     if (reloading){
       reloadtimer --;
       if (reloadtimer == 0){
@@ -56,6 +56,9 @@ public class Player{
     if (ability && powercool == 2320){
       ability = false;
       maxspeed = 1;
+      if (player == "Aria"){
+        maxspeed = 1.3;
+      }
     }
     
     if (health < 0) health = 0;

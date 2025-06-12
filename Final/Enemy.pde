@@ -82,8 +82,8 @@ public class Enemy {
         playerinvis --;
       }
       if (frameCount % 60 == 0){
-        velocity.x = (random(200, 1700) - position.x)/100;
-        velocity.z = (random(200, 1700) - position.z)/100;
+        velocity.x = (random(max(200, position.x - 200), min(4800, position.x + 200)) - position.x)/100;
+        velocity.z = (random(max(200, position.z - 200), min(4800, position.z + 200)) - position.z)/100;
       }
     }
     
@@ -101,6 +101,9 @@ public class Enemy {
         Ammo ammo = new Ammo(tempvector);
         if (random(1) < 0.6){
           ammo.powerup = "ammo";
+          if (player.player == "Aria"){
+            ammo.img = loadImage("redbull.png");
+          }
         } else if (random(1) < 0.5){
           ammo.powerup = "health";
           ammo.img = loadImage("health.png");
