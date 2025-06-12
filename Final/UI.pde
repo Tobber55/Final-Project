@@ -295,6 +295,7 @@ public class UI {
         strokeWeight(1);
         player.player = "Tobber";
         player.maxammo = 30;
+        player.maxspeed = 1.1;
         player.ammo = player.maxammo;
         player.allammo = player.maxammo;
         player.shootmaxcool = 10;
@@ -306,6 +307,7 @@ public class UI {
         strokeWeight(1);
         player.player = "Shadow";
         player.maxammo = 6;
+        player.maxspeed = 1.1;
         player.ammo = player.maxammo;
         player.allammo = player.maxammo;
         player.shootmaxcool = 60;

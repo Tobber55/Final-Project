@@ -116,16 +116,10 @@ public class Player{
       //println(coords.x + " " + coords.y);
       int[][] temp = tilemap.tilemap();
       
-      for (int i = -2; i < 2; i ++){
-        if ((temp[(int)coords.x + 1][(int)coords.y + i] > 0 && velocity.x > 0) || (temp[(int)coords.x - 2][(int)coords.y + i] > 0) && velocity.x < 0){
-          velocity.x = 0;
-        }
-      }
-      for (int i = -2; i < 2; i ++){
-        if ((temp[(int)coords.x + i][(int)coords.y - 2] > 0 && velocity.z < 0) || (temp[(int)coords.x + i][(int)coords.y + 1] > 0) && velocity.z > 0){
-          velocity.z = 0;
-        }
-      }
+      if (((temp[(int)coords.x + 1][(int)coords.y] > 0) && (velocity.x > 0)) || ((temp[(int)coords.x + 1][(int)coords.y - 1] > 0) && (velocity.x > 0))
+      || ((temp[(int)coords.x - 2][(int)coords.y] > 0) && (velocity.x < 0)) || ((temp[(int)coords.x - 2][(int)coords.y - 1] > 0) && (velocity.x < 0))) velocity.x = 0;    ////////  DOESNT CLIP IN BUT CAN SOMETIMES. SLIDES
+      if (((temp[(int)coords.x][(int)coords.y - 2] > 0) && (velocity.z < 0)) || ((temp[(int)coords.x - 1][(int)coords.y - 2] > 0) && (velocity.z < 0))
+      || ((temp[(int)coords.x][(int)coords.y + 1] > 0) && (velocity.z > 0)) || ((temp[(int)coords.x - 1][(int)coords.y + 1] > 0) && (velocity.z > 0))) velocity.z = 0;
     }
     else {
       velocity.x = 0;
