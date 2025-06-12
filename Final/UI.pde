@@ -9,6 +9,10 @@ public class UI {
   PImage rudi = loadImage("Rudi.png");
   PImage alex = loadImage("Alex.png");
   
+  PImage handSzeUp = loadImage("SzeHandUp.png");
+  PImage handSzeDown = loadImage("SzeHandDown.png");
+  PImage handRudi = loadImage("RudiHand.png");
+  
   boolean startscreen = true;
   
   int stage = 1;
@@ -20,6 +24,12 @@ public class UI {
   public void update(Player player) {
     camera();
     translate(width / 2, height / 2, 325);
+    
+    if (player.player == "Tobber") {
+      scale(0.02, 0.02);
+      image(handRudi, 700, -100);
+      scale(1/0.02, 1/0.02);
+    }
     
     fill(120,120,120);
     rect(0, 30, 155, 18);
@@ -244,8 +254,9 @@ public class UI {
         strokeWeight(1);
         player.player = "Aria";
         player.maxammo = 100;
+        player.maxspeed = 1.3;
         player.ammo = player.maxammo;
-        player.shootmaxcool = 30;
+        player.shootmaxcool = 20;
         player.armor = 120;
         stage = 3;
         return(false);

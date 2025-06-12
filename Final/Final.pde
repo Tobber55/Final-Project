@@ -77,7 +77,7 @@ void drawScene() {
     for (int j = 0; j < temp[i].length; j++) {
       for (int k = 0; k < temp[i][j]; k++) {
         pushMatrix();
-        fill(255, 100, 100);
+        fill(103, 103, 103);
         translate(size * i, (floor - size / 2) - (k * size), size * j);
         box(size);
         popMatrix();

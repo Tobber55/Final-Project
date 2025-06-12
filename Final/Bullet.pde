@@ -27,6 +27,7 @@ public class Bullet {
     this.homing = homing;
     this.player = player;
     this.enemy = enemy;
+    if (enemy == true) speed = 10;
     if (player == "Aria") this.range = range;
     
     if (enemies.size() > 0 && homing){
@@ -61,7 +62,7 @@ public class Bullet {
         }
         if (enemy){
           if (tempx == currentChunk(playerr.position.x, playerr.position.z).x && tempy == currentChunk(playerr.position.x, playerr.position.z).y) {
-            playerr.health -= 20 - (20 * ((playerr.armor/100) - 1)); 
+            playerr.health -= 20 - (20 * ((playerr.armor/100.0) - 1)); 
             return(true);
           }
         }

@@ -35,6 +35,7 @@ public class Player{
   }
   
   void movement(){
+    
     if (reloading){
       reloadtimer --;
       if (reloadtimer == 0){
