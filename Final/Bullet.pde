@@ -26,7 +26,8 @@ public class Bullet {
     players = p;
     this.homing = homing;
     this.player = player;
-
+    this.enemy = enemy;
+    if (enemy == true) speed = 10;
     if (player == "Aria") this.range = range;
     
     if (enemies.size() > 0 && homing){
@@ -50,13 +51,20 @@ public class Bullet {
       for (int y = -8; y < 9; y ++){
         int tempx = round((position.x + x) / size);
         int tempy = round((position.z + y) / size);
-        if (tilemap.tilemap()[tempx][tempy] > 0 || entitymap[tempx][tempy] != null){
-          if (entitymap[tempx][tempy] != null) {
-            if (player == "Tobber") entitymap[tempx][tempy].health -= 15;
-            if (player == "Shadow") entitymap[tempx][tempy].health -= 50;
-            if (player == "Aria") entitymap[tempx][tempy].health -= 30;
+        if (tilemap.tilemap()[tempx][tempy] > 0){
+          return true;
+        }
+        if (!enemy && entitymap[tempx][tempy] != null) {
+          if (player == "Tobber") entitymap[tempx][tempy].health -= 15;
+          if (player == "Shadow") entitymap[tempx][tempy].health -= 50;
+          if (player == "Aria") entitymap[tempx][tempy].health -= 30;
+          return true;
+        }
+        if (enemy){
+          if (tempx == currentChunk(playerr.position.x, playerr.position.z).x && tempy == currentChunk(playerr.position.x, playerr.position.z).y) {
+            playerr.health -= 20 - (20 * ((playerr.armor/100.0) - 1)); 
+            return(true);
           }
-          return(true);
         }
       }
     }
@@ -73,21 +81,6 @@ public class Bullet {
       }
     }
     
-
-    if (enemy == false) {
-      if (entitymap[xcor][ycor] != null) {
-        if (player == "Tobber") entitymap[xcor][ycor].health -= 15;
-        if (player == "Alvin") entitymap[xcor][ycor].health -= 50;
-        if (player == "Aria") entitymap[xcor][ycor].health -= 30;
-        return(true);
-      }
-    }
-    else {
-      println(xcor + ", " + currentChunk(playerr.position.x, playerr.position.y).x);
-      if (xcor == currentChunk(playerr.position.x, playerr.position.y).x && ycor == currentChunk(playerr.position.x, playerr.position.y).y) {
-        playerr.health -= 20 - (20 * ((playerr.armor/100) - 1)); 
-      }
-    }
     return(false);
   }
   
@@ -104,8 +97,5 @@ public class Bullet {
     return(new PVector(xcor, ycor));
   }
 }
-    
-    return(false);
-  }
-}
+
   

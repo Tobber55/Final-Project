@@ -74,7 +74,7 @@ public class Enemy {
       velocity.x = 0;
       velocity.z = 0;
     }
-    else if (playerinvis == 0 && dist(position.x, position.z, player.position.x, player.position.z) < size * 5) {
+    else if (playerinvis == 0 && dist(position.x, position.z, player.position.x, player.position.z) < size * 10) {
       velocity.x = (player.position.x - position.x)/100;
       velocity.z = (player.position.z - position.z)/100;
     } else {

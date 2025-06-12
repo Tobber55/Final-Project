@@ -49,16 +49,21 @@ void draw() {
   
 
   
-  if (startscreen == false) {
+  if (startscreen == false && player.health > 0 && enemies.size() != 0) {
     background(120, 160, 200);
     drawScene();
     player.movement();
     ui.update(player);
   }
+  else if (player.health <= 0) {
+    ui.uiEnd();
+  }
+  else if (enemies.size() == 0) {
+    ui.winScreen();
+  }
   else {
     ui.uiStart();
   }
-
 }
 
 
@@ -77,7 +82,7 @@ void drawScene() {
     for (int j = 0; j < temp[i].length; j++) {
       for (int k = 0; k < temp[i][j]; k++) {
         pushMatrix();
-        fill(255, 100, 100);
+        fill(103, 103, 103);
         translate(size * i, (floor - size / 2) - (k * size), size * j);
         box(size);
         popMatrix();
@@ -95,12 +100,17 @@ void drawScene() {
       bullet.playerr = player;
 
       if (bullet.collision()) bullets.remove(i); 
-      bullet.position.x += bullet.dir.x * bullet.speed;
-      bullet.position.z += bullet.dir.y * bullet.speed;
-      if (player.player != "Aria") {
+      if (bullet.enemy && player.player == "Aria" && player.powercool > 1900){
+        bullet.position.x += bullet.dir.x * bullet.speed * 0.08;
+        bullet.position.z += bullet.dir.y * bullet.speed * 0.08;
+      } else {
+        bullet.position.x += bullet.dir.x * bullet.speed;
+        bullet.position.z += bullet.dir.y * bullet.speed;
+      }
+      if (player.player != "Aria" || bullet.enemy) {
         pushMatrix();
 
-        if (bullet.enemy  == true) fill(255, 0, 0);
+        if (bullet.enemy) fill(255, 0, 0);
         else fill(0, 0, 0);
   
         translate(bullet.position.x, bullet.position.y, bullet.position.z);
@@ -124,8 +134,14 @@ void drawScene() {
       translate(size * ammos.get(i).currentChunk.x, 100, size * ammos.get(i).currentChunk.y);
       rotateY(frameCount * 0.05);
       translate(-32, 0, 0);
-      image(ammos.get(i).img, 0, 0);
-      ammos.get(i).img.resize(64, 64);
+      if (player.player == "Aria") {
+        image(ammos.get(i).img2, 0, 0);
+        ammos.get(i).img2.resize(64, 64);
+      }
+      else {
+        image(ammos.get(i).img, 0, 0);
+        ammos.get(i).img.resize(64, 64);
+      }
       popMatrix();
 
       //println(ammos.get(i).currentChunk + " " + player.currentChunk(player.positHThamidurion.x, player.position.z));
@@ -140,6 +156,8 @@ void drawScene() {
         } else if (ammos.get(i).powerup == "health"){
           if (player.health < 100){
             player.health = min(100, player.health + 10);
+            tilemap.map[int(ammos.get(i).currentChunk.x)][int(ammos.get(i).currentChunk.y)] = 0;
+            ammos.remove(i);
           }
         } else if (ammos.get(i).powerup == "armor"){
           player.armor += 5;
@@ -164,4 +182,3 @@ void mousePressed() {
   if (startscreen == true) startscreen = ui.readInput(new PVector(mouseX, mouseY), player);
 
 }
-
