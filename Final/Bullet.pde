@@ -1,7 +1,11 @@
+
 public class Bullet {
   PVector dir;
   int speed = 15;
   PVector position;
+  
+  Player playerr;
+  
   boolean players;
 
   boolean homing;
@@ -13,21 +17,27 @@ public class Bullet {
   
   int range = -1;
   
-  public Bullet(PVector pos, PVector velocity, boolean p, boolean homing, String player, int range) {
+  boolean enemy;
+  
+  public Bullet(PVector pos, PVector velocity, boolean p, boolean homing, String player, int range, boolean enemy) {
+
     position = pos;
     dir = velocity.normalize();
     players = p;
     this.homing = homing;
     this.player = player;
+    this.enemy = enemy;
+    if (enemy == true) speed = 10;
     if (player == "Aria") this.range = range;
     
-    if (homing){
+    if (enemies.size() > 0 && homing){
       targetnumber = 0;
-      float minimum = new PVector(enemies.get(0).position.x - position.x, enemies.get(0).position.z - position.z).mag();
+      float minimum = dist(enemies.get(0).position.x, enemies.get(0).position.z, position.x, position.z);
       for (int i = 1; i < enemies.size(); i ++){
         PVector temp = enemies.get(targetnumber).position;
-        if (new PVector(temp.x - position.x, temp.z - position.z).mag() < minimum){
-          minimum = new PVector(temp.x - position.x, temp.z - position.z).mag();
+        if (dist(temp.x, temp.z, position.x, position.z) < minimum){
+          minimum = dist(temp.x, temp.z, position.x, position.z);
+
           targetnumber = i;
         }
       }
@@ -35,12 +45,26 @@ public class Bullet {
   }
   
   boolean collision() {
-    int xcor = round((position.x) / size);
-    int ycor = round((position.z) / size);
+
+    if (enemies.size() <= targetnumber) homing = false;
     for (int x = -8; x < 9; x ++){
       for (int y = -8; y < 9; y ++){
-        if (tilemap.tilemap()[round((position.x + x) / size)][round((position.z + y) / size)] > 0){
-          return(true);
+        int tempx = round((position.x + x) / size);
+        int tempy = round((position.z + y) / size);
+        if (tilemap.tilemap()[tempx][tempy] > 0){
+          return true;
+        }
+        if (!enemy && entitymap[tempx][tempy] != null) {
+          if (player == "Tobber") entitymap[tempx][tempy].health -= 15;
+          if (player == "Shadow") entitymap[tempx][tempy].health -= 50;
+          if (player == "Aria") entitymap[tempx][tempy].health -= 30;
+          return true;
+        }
+        if (enemy){
+          if (tempx == currentChunk(playerr.position.x, playerr.position.z).x && tempy == currentChunk(playerr.position.x, playerr.position.z).y) {
+            playerr.health -= 20 - (20 * ((playerr.armor/100.0) - 1)); 
+            return(true);
+          }
         }
       }
     }
@@ -57,14 +81,21 @@ public class Bullet {
       }
     }
     
-    if (entitymap[xcor][ycor] != null) {
-      if (player == "Tobber") entitymap[xcor][ycor].health -= 15;
-      if (player == "Alvin") entitymap[xcor][ycor].health -= 50;
-      if (player == "Aria") entitymap[xcor][ycor].health -= 30;
-      return(true);
-    }
     return(false);
   }
-}
   
+  PVector currentChunk(float posx, float posz){
+    int xcor = 0;
+    int ycor = 0;
+    for (int i = 0; i < posx; i += size) {
+      xcor += 1;
+    }
+    for (int i = 0; i < posz; i += size) {
+      ycor += 1;
+    }
+    //println(xcor + " " + ycor);
+    return(new PVector(xcor, ycor));
+  }
+}
 
+  

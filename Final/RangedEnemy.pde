@@ -1,41 +1,13 @@
-public class Enemy {
+public class RangedEnemy extends Enemy {
   
-  PVector position;
-  PVector velocity = new PVector(0, 0, 0);
+  PImage img = loadImage("TemuBlaze.png");
   
-  int health = 100;
-  
-  int damage = 20;
-  int cooldown = 0;
-  
-  int positionInArray = -1;
-  
-  float maxspeed = 2;
-  int rotation = 0;
-  
-  PVector currentChunk;
-  
-  boolean inRange = false;
-  
-  PImage img = loadImage("TemuCthulhu.png");
-  
-  int playerinvis = 0;
-  int timeslow = 0;
-  
-  public Enemy(PVector chunk) {
-    this.position = new PVector(chunk.x * size, 108, chunk.y * size);
-    currentChunk = chunk;
+  public RangedEnemy(PVector chunk) {
+    super(chunk);
   }
   
   public void update() {
     
-    if (timeslow > 0){
-      timeslow --;
-      maxspeed = 0.8;
-    } else {
-      maxspeed = 2;
-    }
-
     if (cooldown > 0) cooldown -= 1;
     
     currentChunk();
@@ -60,22 +32,27 @@ public class Enemy {
       }
     }
     
-    
     translate(-32, 0, 0);
     image(img, 0, 0);
-    img.resize(80, 80);
+    img.resize(64, 64);
     popMatrix();
     
     
     if (inRange == true && playerinvis == 0) {
       if (cooldown <= 0) {
-        player.health -= damage - (damage * ((player.armor/100.0) - 1)); 
-        cooldown = 50;
+        float tempp = temp.x;
+        if (tempp <= -1) tempp = 0;
+        float turn = PI - asin(tempp) + HALF_PI;
+        //println(tempp);
+        Bullet bullet;
+        bullet = new Bullet(new PVector(position.x + cos(turn) * 60, position.y + 30, position.z + sin(turn) * 60), new PVector(cos(turn), sin(turn)), true, false, "", 16, true);
+        bullets.add(bullet);
+        cooldown = 90;
       }
       velocity.x = 0;
       velocity.z = 0;
     }
-    else if (playerinvis == 0 && dist(position.x, position.z, player.position.x, player.position.z) < size * 10) {
+    else if (playerinvis == 0 && dist(position.x, position.z, player.position.x, player.position.z) < size * 5) {
       velocity.x = (player.position.x - position.x)/100;
       velocity.z = (player.position.z - position.z)/100;
     } else {
@@ -90,27 +67,11 @@ public class Enemy {
     
     velocity.x = constrain(velocity.x, maxspeed * -1, maxspeed);
     velocity.z = constrain(velocity.z, maxspeed * -1, maxspeed);
-
     
     if (health <= 0) {
       
       entitymap[(int)currentChunk.x][(int)currentChunk.y] = null;  ////////// Kills everything in that spot?
-      if (random(1) > 0.2){
-        int[][] map = tilemap.map;
-        map[round(currentChunk.x)][round(currentChunk.y)] = -1;
-        PVector tempvector = new PVector(round(currentChunk.x), round(currentChunk.y));
-        Ammo ammo = new Ammo(tempvector);
-        if (random(1) < 0.6){
-          ammo.powerup = "ammo";
-        } else if (random(1) < 0.5){
-          ammo.powerup = "health";
-          ammo.img = loadImage("health.png");
-        } else {
-          ammo.powerup = "armor";
-          ammo.img = loadImage("sheild.png");
-        }
-        ammos.add(ammo);
-      }
+      
       enemies.remove(positionInArray);
     }
     
@@ -121,8 +82,8 @@ public class Enemy {
   }
   
   boolean inRange() {
-    for (int i = -1; i < 2; i++) {
-      for (int j = -1; j < 2; j++) {
+    for (int i = -10; i < 11; i++) {
+      for (int j = -10; j < 11; j++) {
         if ((currentChunk(player.position.x, player.position.z).x == currentChunk.x + i) && (currentChunk(player.position.x, player.position.z).y == currentChunk.y + j)) {
           return(true);
         }
