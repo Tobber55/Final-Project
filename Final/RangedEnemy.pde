@@ -62,8 +62,8 @@ public class RangedEnemy extends Enemy {
         playerinvis --;
       }
       if (frameCount % 60 == 0){
-        velocity.x = (random(200, 1700) - position.x)/100;
-        velocity.z = (random(200, 1700) - position.z)/100;
+        velocity.x = (random(max(200, position.x - 200), min(4800, position.x + 200)) - position.x)/100;
+        velocity.z = (random(max(200, position.z - 200), min(4800, position.z + 200)) - position.z)/100;
       }
     }
     

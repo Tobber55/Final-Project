@@ -316,7 +316,7 @@ public class UI {
         stroke(0);
         strokeWeight(1);
         player.player = "Aria";
-        player.maxammo = 100;
+        player.maxammo = 50;
         player.maxspeed = 1.3;
         player.ammo = player.maxammo;
         player.shootmaxcool = 20;
